@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Update je profiel{% endblock %}
+
+{% block body %}
+
+    <form class="form-horizontal" action="{{ path('saveKandidaatProfiel') }}" method="POST">
+        <fieldset>
+
+            <legend>Update je profiel</legend>
+
+            <div class="form-group">
+                <input id="id" name="id" type="hidden" value="{{ data.id }}" class="form-control input-md" required="">                
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="voornaam">Voornaam</label>  
+                <input id="voornaam" name="voornaam" type="text" value="{{ data.voornaam }}" class="form-control input-md" required="">                
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="naam">Achternaam</label>  
+                <input id="naam" name="naam" type="text" value="{{ data.naam }}" class="form-control input-md" required="">                    
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="email">Email-adres</label>  
+                <input id="email" name="email" type="text" value="{{ data.email }}" class="form-control input-md" required="">
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="geboortedatum">Geboortedatum (dd-mm-yyyy)</label>  
+                <input type="date-local" id="geboortedatum" name="geboortedatum" value="{{ data.geboortedatum | date('d-m-Y') }}" class="form-control input-md" required="">
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="telefoonnummer">Telefoonnummer</label>  
+                <input id="telefoonnummer" name="telefoonnummer" type="text" value="{{ data.telefoonnummer }}" class="form-control input-md" required="">
+            </div>
+        
+            <div class="form-group">
+                <label class="control-label" for="adres">Adres</label>  
+                <input id="adres" name="adres" type="text" value="{{ data.adres }}" class="form-control input-md" required="">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="postcode">Postcode</label>  
+                <input id="postcode" name="postcode" type="text" value="{{ data.postcode }}" class="form-control input-md" required="">
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="woonplaats">Woonplaats</label>  
+                <input id="woonplaats" name="woonplaats" type="text" value="{{ data.woonplaats }}" class="form-control input-md" required="">
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="gebruikerBeschrijving">Motivatie</label>  
+                <input id="gebruikerBeschrijving" name="gebruikerBeschrijving" type="text" value="{{ data.gebruikerBeschrijving }}" class="form-control input-md" required="">
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="cv">CV</label>
+                <input id="cv" name="cv" class="input-file" type="file">
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save">
+            </div>
+
+        </fieldset>
+    </form>
+
+{% endblock %}

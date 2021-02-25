@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Vacature;
+
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,32 +20,42 @@ class VacatureRepository extends ServiceEntityRepository
         parent::__construct($registry, Vacature::class);
     }
 
-    // /**
-    //  * @return Vacature[] Returns an array of Vacature objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('v.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+    public function getAllVacatures() {
+        $vacatures = $this->findAll();
+        return($vacatures);
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Vacature
-    {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+    public function getVacature($id) {
+        $vacature = $this->find($id);
+        return($vacature);
     }
-    */
+
+    public function getMyVacatures($id) {
+        $vacatures = $this->findBy(array("bedrijf" => $id));
+        return($vacatures);
+    }
+
+    public function saveVacature($params) {
+
+        if(isset($params['id'])) {
+            $vacature = $this->find($params['id']);
+        }
+        else {
+            $vacature = new Vacature();
+        }
+
+        $vacature->setNiveau($params['niveau']);
+        $vacature->setPlatform($params['platform']);
+        $vacature->setTitel($params['titel']);
+        $vacature->setstandplaats($params['standplaats']);
+        $vacature->setVacatureBeschrijving($params['vacatureBeschrijving']);
+        $vacature->setPlaatsingsDatum($params['plaatsingsDatum']);
+        $vacature->setBedrijf($params['bedrijf']);
+
+        $em = $this->getEntityManager();
+        $em->persist($vacature);
+        $em->flush();
+
+        return($vacature);
+    }
 }

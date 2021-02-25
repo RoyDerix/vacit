@@ -18,13 +18,13 @@ class Vacature
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=niveauplatform::class)
+     * @ORM\ManyToOne(targetEntity=NiveauPlatform::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $niveau;
 
     /**
-     * @ORM\ManyToOne(targetEntity=niveauplatform::class)
+     * @ORM\ManyToOne(targetEntity=NiveauPlatform::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $platform;
@@ -40,7 +40,7 @@ class Vacature
     private $standplaats;
 
     /**
-     * @ORM\Column(type="string", length=1500)
+     * @ORM\Column(type="string", length=10000)
      */
     private $vacature_beschrijving;
 
@@ -50,7 +50,7 @@ class Vacature
     private $plaatsings_datum;
 
     /**
-     * @ORM\ManyToOne(targetEntity=gebruiker::class)
+     * @ORM\ManyToOne(targetEntity=Gebruiker::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $bedrijf;
@@ -60,24 +60,24 @@ class Vacature
         return $this->id;
     }
 
-    public function getNiveau(): ?niveauplatform
+    public function getNiveau(): ?NiveauPlatform
     {
         return $this->niveau;
     }
 
-    public function setNiveau(?niveauplatform $niveau): self
+    public function setNiveau(?NiveauPlatform $niveau): self
     {
         $this->niveau = $niveau;
 
         return $this;
     }
 
-    public function getPlatform(): ?niveauplatform
+    public function getPlatform(): ?NiveauPlatform
     {
         return $this->platform;
     }
 
-    public function setPlatform(?niveauplatform $platform): self
+    public function setPlatform(?NiveauPlatform $platform): self
     {
         $this->platform = $platform;
 

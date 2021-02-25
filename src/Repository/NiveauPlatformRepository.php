@@ -19,32 +19,20 @@ class NiveauPlatformRepository extends ServiceEntityRepository
         parent::__construct($registry, NiveauPlatform::class);
     }
 
-    // /**
-    //  * @return NiveauPlatform[] Returns an array of NiveauPlatform objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('n')
-            ->andWhere('n.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('n.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+    public function getAllNiveaus() {
 
-    /*
-    public function findOneBySomeField($value): ?NiveauPlatform
-    {
-        return $this->createQueryBuilder('n')
-            ->andWhere('n.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $niveaus = $this->findBy(array("record_type" => "N"));
+        return($niveaus);
     }
-    */
+
+    public function getAllPlatforms() {
+
+        $platforms = $this->findBy(array("record_type" => "P"));
+        return($platforms);
+    }
+
+    public function getNiveauPlatform($id) {
+        $niveauPlatform = $this->find($id);
+        return($niveauPlatform);
+    }
 }

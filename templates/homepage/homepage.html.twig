@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomepageController!{% endblock %}
+
+{% block body %}
+    <div class="row" style="background-color: #F15A24">
+        <div class="col-3">
+            <h1>Carousel</h1>
+        </div>
+        <div class="col-9" style="max-width: 800px">
+                        {% for record in data %}
+                            <p>
+                                <h5>{{ record.plaatsingsDatum | date('d-m-Y') }}</h5>
+                                <h3><a href="/vacature/{{record.id}}">{{ record.titel }}</a> voor {{ record.bedrijf.naam }}</h3>
+                                <h4>{{ record.vacatureBeschrijving | u.truncate(200, '...') }}
+                            </p>
+                        {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}

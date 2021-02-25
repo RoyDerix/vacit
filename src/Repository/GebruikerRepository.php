@@ -36,32 +36,37 @@ class GebruikerRepository extends ServiceEntityRepository implements PasswordUpg
         $this->_em->flush();
     }
 
-    // /**
-    //  * @return Gebruiker[] Returns an array of Gebruiker objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('g.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+   public function getGebruiker($id) {
+       $gebruiker = $this->find($id);
+       return($gebruiker);
+   }
 
-    /*
-    public function findOneBySomeField($value): ?Gebruiker
-    {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+   public function saveGebruiker($params) {
+    
+        if(isset($params['id'])) {
+            $gebruiker = $this->find($params['id']);
+        }
+        else {
+            $gebruiker = new Gebruiker();
+        }
+
+        $gebruiker->setVoornaam($params['voornaam']);
+        $gebruiker->setNaam($params['naam']);
+        $gebruiker->setemail($params['email']);
+
+        $geboortedatum = \DateTime::createFromFormat('d-m-Y', $params['geboortedatum']);
+        $gebruiker->setGeboortedatum($geboortedatum);
+        
+        $gebruiker->setTelefoonnummer($params['telefoonnummer']);
+        $gebruiker->setAdres($params['adres']);
+        $gebruiker->setPostcode($params['postcode']);
+        $gebruiker->setWoonplaats($params['woonplaats']);
+        $gebruiker->setGebruikerBeschrijving($params['gebruikerBeschrijving']);
+
+        $em = $this->getEntityManager();
+        $em->persist($gebruiker);
+        $em->flush();
+
+        return($gebruiker);
+   }
 }

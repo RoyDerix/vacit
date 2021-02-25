@@ -19,32 +19,29 @@ class SollicitatieRepository extends ServiceEntityRepository
         parent::__construct($registry, Sollicitatie::class);
     }
 
-    // /**
-    //  * @return Sollicitatie[] Returns an array of Sollicitatie objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+    public function getSollicitaties($id) {
+        $sollicitaties = $this->findBy(array("kandidaat" => $id));
+        return($sollicitaties);
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Sollicitatie
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+    public function saveSollicitatie($params) {
+
+        if(isset($params['id'])) {
+            $sollicitatie = $this->find($params['id']);
+        }
+        else {
+            $sollicitatie = new Sollicitatie();
+        }
+
+        $sollicitatie->setVacature($params['vacature']);
+        $sollicitatie->setUitgenodigd($params['uitgenodigd']);
+        $sollicitatie->setSollicitatieDatum($params['sollicitatie_datum']);
+        $sollicitatie->setKandidaat($params['kandidaat']);
+
+        $em = $this->getEntityManager();
+        $em->persist($sollicitatie);
+        $em->flush();
+
+        return($sollicitatie);
     }
-    */
 }

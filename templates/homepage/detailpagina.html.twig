@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomepageController!{% endblock %}
+
+{% block body %}
+    <h1>Detailpagina</h1>
+    <div>Titel: {{ data.titel }}</div>
+    <div>Niveau: {{ data.niveau.tekstveld }}</div>
+    <div>Platform: {{ data.platform.tekstveld }}</div>
+    <div>Bedrijf: {{ data.bedrijf.naam }}</div>
+    <div>Vacature: <p>{{ data.vacatureBeschrijving | raw }}</p></div>
+
+{% endblock %}

@@ -18,13 +18,13 @@ class Sollicitatie
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=vacature::class)
+     * @ORM\ManyToOne(targetEntity=Vacature::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $vacature;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string")
      */
     private $uitgenodigd;
 
@@ -34,7 +34,7 @@ class Sollicitatie
     private $sollicitatie_datum;
 
     /**
-     * @ORM\ManyToOne(targetEntity=gebruiker::class)
+     * @ORM\ManyToOne(targetEntity=Gebruiker::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $kandidaat;
@@ -56,12 +56,12 @@ class Sollicitatie
         return $this;
     }
 
-    public function getUitgenodigd(): ?bool
+    public function getUitgenodigd(): ?string
     {
         return $this->uitgenodigd;
     }
 
-    public function setUitgenodigd(bool $uitgenodigd): self
+    public function setUitgenodigd(?string $uitgenodigd): self
     {
         $this->uitgenodigd = $uitgenodigd;
 
