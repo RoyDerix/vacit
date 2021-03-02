@@ -34,24 +34,35 @@ class BedrijfController extends BaseController
     /**
      * @Route("/updateBedrijfProfiel/{id}", name="updateBedrijfProfiel")
      * @Template()
-    */
+     */
     public function updateProfiel($id)
     {
-        $data = $this->ks->getBedrijf($id);
-        dump($data);
-        die();
-        //return array("data" => $data);
+        $user = $this->getUser();
+        $user_id = $user->getId();
+        if($user_id == $id) {
+            $data = $this->bs->getBedrijf($id);
+            return array("data" => $data);
+        }
+        return $this->redirectToRoute('showBedrijfProfiel', ['id' => $user_id]);
     }
 
+    /**
+     * @Route("/saveBedrijfProfiel", name="saveBedrijfProfiel")
+     */
+    public function saveProfiel(Request $request)
+    {
+        $params = $request->request->all();
+        $profiel = $this->bs->saveProfiel($params);
+        return $this->redirectToRoute('showBedrijfProfiel', ['id' => $params['id']]);
+    }
 
     /**
      * @Route("/showMijnVacatures/{id}", name="showMijnVacatures")
-     * @Template()
     */
     public function showVacatures($id)
     {
-        $data = $this->vs->getMyVacatures($id);
-        dump($data);
+        $vacatures = $this->vs->getMyVacatures($id);
+        dump($vacatures);
         die();
         //return array("data" => $data);
     }
@@ -67,13 +78,48 @@ class BedrijfController extends BaseController
     }
 
     /**
+     * @Route("/editVacature/{id}", name="editVacature")
+     * @Template()
+    */
+    public function editVacature($id) {
+        $niveaus = $this->nps->getAllNiveaus();
+        $platforms = $this->nps->getAllPlatforms();
+        $data = $this->vs->getVacature($id);
+
+        return array("data" => $data, "niveaus" => $niveaus, "platforms" => $platforms);
+    }
+
+    /**
      * @Route("/saveVacature", name="saveVacature")
     */
     public function saveVacature(Request $request)
     {
         $params = $request->request->all();
         $vacature = $this->vs->saveVacature($params);
-        $id = $vacature->getId();
-        return $this->redirectToRoute('detailpagina', ['id' => $id]);
+        $bedrijf = $this->getUser();
+        $bedrijf_id = $bedrijf->getId();
+        return $this->redirectToRoute('showMijnVacatures', ['id' => $bedrijf_id]);
+    } 
+
+    /**
+     * @Route("/deleteVacature/{id}", name="deleteVacature")
+    */
+    public function deleteVacature($id)
+    {
+        $vacature = $this->vs->deleteVacature($id);
+        $bedrijf = $this->getUser();
+        $bedrijf_id = $bedrijf->getId();
+        return $this->redirectToRoute('showMijnVacatures', ['id' => $bedrijf_id]);
+    }
+
+    /**
+     * @Route("/uitnodigen/{id}", name="uitnodigen")
+    */
+    public function uitnodigen($id)
+    {
+        $sollicitatie = $this->ss->uitnodigen($id);
+        $bedrijf = $this->getUser();
+        $bedrijf_id = $bedrijf->getId();
+        return $this->redirectToRoute('showMijnVacatures', ['id' => $bedrijf_id]);
     } 
 }

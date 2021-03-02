@@ -40,7 +40,7 @@ class Vacature
     private $standplaats;
 
     /**
-     * @ORM\Column(type="string", length=10000)
+     * @ORM\Column(type="text")
      */
     private $vacature_beschrijving;
 
@@ -143,4 +143,5 @@ class Vacature
 
         return $this;
     }
+
 }

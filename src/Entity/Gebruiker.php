@@ -72,7 +72,7 @@ class Gebruiker implements UserInterface
     private $woonplaats;
 
     /**
-     * @ORM\Column(type="string", length=1500)
+     * @ORM\Column(type="text")
      */
     private $gebruiker_beschrijving;
 

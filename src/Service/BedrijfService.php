@@ -18,4 +18,9 @@ class BedrijfService {
         $bedrijf = $this->rep->getGebruiker($id);
         return($bedrijf);
     }
+
+    public function saveProfiel($params) {
+        $gebruiker = $this->rep->saveGebruiker($params);
+        return($gebruiker);
+    }
 }

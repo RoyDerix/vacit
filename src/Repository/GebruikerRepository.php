@@ -8,6 +8,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @method Gebruiker|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,9 +18,13 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class GebruikerRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
-    public function __construct(ManagerRegistry $registry)
+    private $encoder;
+
+    public function __construct(ManagerRegistry $registry,
+                                UserPasswordEncoderInterface $encoder)
     {
         parent::__construct($registry, Gebruiker::class);
+        $this->encoder = $encoder;
     }
 
     /**
@@ -50,12 +55,27 @@ class GebruikerRepository extends ServiceEntityRepository implements PasswordUpg
             $gebruiker = new Gebruiker();
         }
 
-        $gebruiker->setVoornaam($params['voornaam']);
+        if(isset($params['password'])) {
+            $password = $this->encoder->encodePassword($gebruiker, $params['password']);
+            $gebruiker->setPassword($password);
+        }
+
+        if(isset($params['roles'])) {
+            $roles = $params['roles'];
+            $gebruiker->setRoles($roles);
+        }
+
+        if(isset($params['voornaam'])) {
+            $gebruiker->setVoornaam($params['voornaam']);
+        }
+
         $gebruiker->setNaam($params['naam']);
         $gebruiker->setemail($params['email']);
 
-        $geboortedatum = \DateTime::createFromFormat('d-m-Y', $params['geboortedatum']);
-        $gebruiker->setGeboortedatum($geboortedatum);
+        if(isset($params['geboortedatum'])) {
+            $geboortedatum = \DateTime::createFromFormat('d-m-Y', $params['geboortedatum']);
+            $gebruiker->setGeboortedatum($geboortedatum);
+        }
         
         $gebruiker->setTelefoonnummer($params['telefoonnummer']);
         $gebruiker->setAdres($params['adres']);

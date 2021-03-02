@@ -3,6 +3,7 @@
 {% block title %}Hello HomepageController!{% endblock %}
 
 {% block body %}
+    <a href="{{ path('saveSollicitatie', {'id':data.id} ) }}">Solliciteer!</a>
     <h1>Detailpagina</h1>
     <div>Titel: {{ data.titel }}</div>
     <div>Niveau: {{ data.niveau.tekstveld }}</div>

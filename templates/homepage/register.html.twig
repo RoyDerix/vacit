@@ -1,60 +1,72 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Update je profiel{% endblock %}
+{% block title %}Registreer je nu!{% endblock %}
 
 {% block body %}
+    <script>
+        $('.content').richText({
 
-    <form class="form-horizontal" action="{{ path('saveKandidaatProfiel') }}" method="POST">
+            bold:true,
+            italic:true,
+        });
+    </script>
+
+    <form class="form-horizontal" action="{{ path('saveProfiel') }}" method="POST">
         <fieldset>
 
-            <legend>Update je profiel</legend>
+            <legend>Registreer je nu!</legend>
 
             <div class="form-group">
-                <input id="id" name="id" type="hidden" value="{{ data.id }}" class="form-control input-md" required="">                
+                <input id="roles" name="roles[]" value="ROLE_KANDIDAAT" type="hidden" class="form-control input-md" required="">                
             </div>
 
             <div class="form-group">
                 <label class="control-label" for="voornaam">Voornaam</label>  
-                <input id="voornaam" name="voornaam" type="text" value="{{ data.voornaam }}" class="form-control input-md" required="">                
+                <input id="voornaam" name="voornaam" type="text" class="form-control input-md" required="">                
             </div>
 
             <div class="form-group">
                 <label class="control-label" for="naam">Achternaam</label>  
-                <input id="naam" name="naam" type="text" value="{{ data.naam }}" class="form-control input-md" required="">                    
+                <input id="naam" name="naam" type="text" class="form-control input-md" required="">                    
             </div>
 
             <div class="form-group">
                 <label class="control-label" for="email">Email-adres</label>  
-                <input id="email" name="email" type="text" value="{{ data.email }}" class="form-control input-md" required="">
+                <input id="email" name="email" type="text" class="form-control input-md" required="">
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="email">Wachtwoord</label>  
+                <input id="password" name="password" type="password" class="form-control input-md" minlength="4" required="">
             </div>
 
             <div class="form-group">
                 <label class="control-label" for="geboortedatum">Geboortedatum (dd-mm-yyyy)</label>  
-                <input type="date-local" id="geboortedatum" name="geboortedatum" value="{{ data.geboortedatum | date('d-m-Y') }}" class="form-control input-md" required="">
+                <input type="date-local" id="geboortedatum" name="geboortedatum" placeholder="dd-mm-yyyy" class="form-control input-md" required="">
             </div>
 
             <div class="form-group">
                 <label class="control-label" for="telefoonnummer">Telefoonnummer</label>  
-                <input id="telefoonnummer" name="telefoonnummer" type="text" value="{{ data.telefoonnummer }}" class="form-control input-md" required="">
+                <input id="telefoonnummer" name="telefoonnummer" type="text" class="form-control input-md" required="">
             </div>
         
             <div class="form-group">
                 <label class="control-label" for="adres">Adres</label>  
-                <input id="adres" name="adres" type="text" value="{{ data.adres }}" class="form-control input-md" required="">
+                <input id="adres" name="adres" type="text" class="form-control input-md" required="">
             </div>
             <div class="form-group">
                 <label class="control-label" for="postcode">Postcode</label>  
-                <input id="postcode" name="postcode" type="text" value="{{ data.postcode }}" class="form-control input-md" required="">
+                <input id="postcode" name="postcode" type="text" class="form-control input-md" required="">
             </div>
 
             <div class="form-group">
                 <label class="control-label" for="woonplaats">Woonplaats</label>  
-                <input id="woonplaats" name="woonplaats" type="text" value="{{ data.woonplaats }}" class="form-control input-md" required="">
+                <input id="woonplaats" name="woonplaats" type="text" class="form-control input-md" required="">
             </div>
 
             <div class="form-group">
                 <label class="control-label" for="gebruikerBeschrijving">Motivatie</label>  
-                <textarea id="gebruikerBeschrijving" name="gebruikerBeschrijving" rows="10" cols="30" class="form-control input-md" required="">{{ data.gebruikerBeschrijving }}</textarea>
+                <textarea id="content" name="gebruikerBeschrijving" class="content" required=""></textarea>
             </div>
 
             <div class="form-group">

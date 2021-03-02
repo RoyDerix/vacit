@@ -22,10 +22,13 @@ class KandidaatController extends BaseController
      */
     public function showProfiel($id)
     {
-        $data = $this->ks->getKandidaat($id);
-        dump($data);
-        die();
-        //return array("data" => $data);
+        $user = $this->getUser();
+        $user_id = $user->getId();
+        if($user_id == $id || $this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_BEDRIJF')) {
+            $data = $this->ks->getKandidaat($id);
+            dd($data);
+        }
+        return $this->redirectToRoute('homepage');
     }
 
     /**
@@ -36,7 +39,7 @@ class KandidaatController extends BaseController
     {
         $user = $this->getUser();
         $user_id = $user->getId();
-        if($user_id == $id) {
+        if($user_id == $id || $this->isGranted('ROLE_ADMIN')) {
             $data = $this->ks->getKandidaat($id);
             return array("data" => $data);
         }
@@ -50,7 +53,9 @@ class KandidaatController extends BaseController
     {
         $params = $request->request->all();
         $profiel = $this->ks->saveProfiel($params);
-        return $this->redirectToRoute('showKandidaatProfiel', ['id' => $params['id']]);
+        $user = $this->getUser();
+        $user_id = $user->getId();
+        return $this->redirectToRoute('showKandidaatProfiel', ['id' => $user_id]);
     }
 
     /**
@@ -66,16 +71,25 @@ class KandidaatController extends BaseController
     }
 
     /**
-     * @Route("/saveSollicitatie", name="saveSollicitatie")
+     * @Route("/saveSollicitatie/{id}", name="saveSollicitatie")
      */
-    public function saveSollicitatie($vacature_id, $kandidaat_id)
+    public function saveSollicitatie($id)
+    {   
+        $user = $this->getUser();
+        $user_id = $user->getId();
+        $sollicitatie = $this->vs->saveSollicitatie($id);
+        return $this->redirectToRoute('showSollicitaties', ['id' => $user_id]);
+
+    }
+
+    /**
+     * @Route("/deleteSollicitatie/{id}", name="deleteSollicitatie")
+    */
+    public function deleteSollicitatie($id)
     {
-        $date = new \DateTime();
-        $params = array("vacature" => $vacature_id,
-                        "uitgenodigd" => "FALSE",
-                        "sollicitatie_datum" => $date,
-                        "kandidaat" => $kandidaat_id);
-        
-        $this->ss->saveSollicitatie($params);
+        $sollicitatie = $this->ss->deleteSollicitatie($id);
+        $user = $this->getUser();
+        $user_id = $user->getId();
+        return $this->redirectToRoute('showSollicitaties', ['id' => $user_id]);
     }
 }

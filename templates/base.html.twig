@@ -3,8 +3,13 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="stylesheet" type="text/css" href="{{ asset('assets/bootstrap/css/bootstrap.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/foundation/css/foundation.css') }}"/>
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/main.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/fontawesome/fontawesome.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/vegas/vegas/vegas.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('assets/richtext/richtext.min.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/main.css') }}"/>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
@@ -12,6 +17,11 @@
             {#{{ encore_entry_link_tags('app') }}#}
         {% endblock %}
         <script type="text/javascript" language="javascript" src="{{ asset('assets/bootstrap/js/bootstrap.js') }}"></script>
+        <script type="text/javascript" language="javascript" src="{{ asset('assets/jquery/jquery.js') }}"></script>
+        <script type="text/javascript" language="javascript" src="{{ asset('assets/richtext/jquery.richtext.min.js') }}"></script>
+        <script src="{{ asset('assets/vegas//vegas/vegas.min.js') }}"></script>
+
+
 
 
         {% block javascripts %}
@@ -19,18 +29,58 @@
         {% endblock %}
     </head>
     <body>
-        <div class="container-fluid">
-            <div class="row" style="height: 200px; background-color: #333333">
-                <img src="{{ asset('assets/logo/vacit-logo-white.png') }}" style="height: 100px; width: 200px">
+        <div class="grid-x" style="background-color: #333333; height: 120px">
+            <div class="cell small-3">
+                <a href="{{ path('homepage') }}">
+                    <img src="{{ asset('assets/logo/vacit-logo-white.png') }}" style="height: 30%; margin: 10px">
+                </a>
             </div>
+            <div class="cell small-9" style="margin-top: 90px; color: white">
+                <div class="grid-x">
+                    <div class="cell small-2 small-offset-6">
+                        <h4><a style="color: white"
+                        {% if not is_granted('ROLE_USER') %}
+                        >
+                        {% elseif is_granted('ROLE_KANDIDAAT') %}
+                        href="{{ path('showKandidaatProfiel', {'id':app.user.id}) }}">MIJN PROFIEL
+                        {% elseif is_granted('ROLE_BEDRIJF') %}
+                        href="{{ path('showBedrijfProfiel', {'id':app.user.id}) }}">MIJN PROFIEL
+                        {% endif %}
+                        </a></h4>
+                    </div>
+                    <div class="cell small-2">
+                        <h4><a style="color: white"
+                        {% if not is_granted('ROLE_USER') %}
+                        href="{{ path('registerKandidaat') }}">REGISTREREN
+                        {% elseif is_granted('ROLE_KANDIDAAT') %}
+                        href="{{ path('showSollicitaties', {'id':app.user.id}) }}">MIJN SOLLICITATIES
+                        {% elseif is_granted('ROLE_BEDRIJF') %}
+                        href="{{ path('showMijnVacatures', {'id':app.user.id}) }}">MIJN VACATURES
+                        {% endif %}
+                        </a></h4>
+                    </div>
+                    <div class="cell small-2">
+                        <h4><a style="color: white" 
+                        {% if not is_granted('ROLE_USER') %}
+                        href="{{ path('app_login') }}">INLOGGEN
+                        {% else %}
+                        href="{{ path('app_logout') }}">UITLOGGEN
+                        {% endif %}
+                        </a></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            {% block body %}{% endblock %}
+        {% block body %}{% endblock %}
 
-            <div class="row" style="height: 200px; background-color: #333333">
+        <div class="grid-x" style="height: 200px; background-color: #333333">
+            <div class="cell">
                 <h1 style="height: 200px; width: 100%; background-color: #333333">Footer
                 </h1>
             </div>
         </div>
+
 
     </body>
 </html>

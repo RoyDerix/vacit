@@ -36,6 +36,7 @@ class VacatureRepository extends ServiceEntityRepository
     }
 
     public function saveVacature($params) {
+        
 
         if(isset($params['id'])) {
             $vacature = $this->find($params['id']);
@@ -57,5 +58,17 @@ class VacatureRepository extends ServiceEntityRepository
         $em->flush();
 
         return($vacature);
+    }
+
+    public function deleteVacature($id) {
+
+        $vacature = $this->find($id);
+
+        $em = $this->getEntityManager();
+        $em->remove($vacature);
+        $em->flush();
+
+        return("Deleted vacature nr. $id");
+
     }
 }

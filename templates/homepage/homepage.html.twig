@@ -1,20 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomepageController!{% endblock %}
+{% block title %}Homepage{% endblock %}
 
 {% block body %}
-    <div class="row" style="background-color: #F15A24">
-        <div class="col-3">
-            <h1>Carousel</h1>
+    <script>
+    $(function() {
+        $("#vegas-carousel").vegas({
+            timer: false,
+            color: '#CCCCCC',
+            slides: [
+                {% for record in data %}
+                    { src: "{{ asset(record.platform.platformIcoon) }}" },
+                {% endfor %}
+            ]
+        });
+    });
+    </script>
+
+
+    <div class="grid-x grid-padding-x" style="background-color: #F15A24">
+        <div class="cell medium-3"> 
+            <div id="vegas-carousel" class="hex" style="filter: invert(100%); height: 200px; width: 200px;">
+            </div>
         </div>
-        <div class="col-9" style="max-width: 800px">
-                        {% for record in data %}
-                            <p>
-                                <h5>{{ record.plaatsingsDatum | date('d-m-Y') }}</h5>
-                                <h3><a href="/vacature/{{record.id}}">{{ record.titel }}</a> voor {{ record.bedrijf.naam }}</h3>
-                                <h4>{{ record.vacatureBeschrijving | u.truncate(200, '...') }}
-                            </p>
-                        {% endfor %}
+        <div class="cell medium-9">
+            {% for record in data %}
+                <div class="grid-x" style="margin-bottom: 20px">
+                    <div class="cell small-3 hex" style="background-color: var(--black); height: 150px; width: 150px; margin: 10px">
+                        <img src="{{ asset(record.platform.platformIcoon) }}" style="filter: invert(100%); padding: 30px; border-radius: 50%">
+                    </div>
+                    <div class="cell auto">
+                        <div class="grid-x">
+                            <div class="cell small-9">
+                                <p>
+                                    <h5>{{ record.plaatsingsDatum | date('d-m-Y') }}</h5>
+                                    <h3><a href="{{ path('detailpagina', {'id':record.id}) }}">{{ record.titel }}</a> voor {{ record.bedrijf.naam }}</h3>
+                                    <h4>{{ record.vacatureBeschrijving | u.truncate(150, '...') }}
+                                </p>
+                            </div>
+                            <div class="cell medium-3" style="font-size: 60px;">
+                                <a href="{{ path('detailpagina', {'id':record.id}) }}" style="color: white"><i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 
