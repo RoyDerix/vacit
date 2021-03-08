@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profiel{% endblock %}
+
+{% block body %}
+    <div class="grid-x grid-padding-x margin-body">
+        <div class="cell small-3">
+            plaatje
+        </div>
+
+        <div class="cell small-8">
+        
+            <div class="grid-x grid-padding-x">
+                <div class="cell medium-6">
+                    <h1 style="color: var(--orange)">PROFIEL</h1>
+                </div>
+            </div>
+
+
+            <div class="grid-x grid-padding-x">
+                <div class="cell medium-6">
+                    <label class="control-label" for="voornaam">voornaam</label>  
+                    <div class="show" id="voornaam">
+                    {{ data.voornaam }}
+                    </div>   
+                </div> 
+
+                <div class="cell medium-6">
+                    <label class="control-label" for="naam">achternaam</label>  
+                    <div class="show" id="naam">
+                    {{ data.naam }}
+                    </div> 
+                </div>       
+            </div>
+
+                    <label class="control-label" for="email">email</label>  
+                    <div class="show" id="email">
+                    {{ data.email }}
+                    </div> 
+
+            <div class="grid-x grid-padding-x">
+                <div class="cell medium-6">
+                    <label class="control-label" for="geboortedatum">geboortedatum</label>  
+                    <div class="show" id="geboortedatum">
+                    {{ data.geboortedatum | date('d-m-Y')  }}
+                    </div> 
+                </div>
+
+                <div class="cell medium-6">
+                    <label class="control-label" for="telefoonnummer">telefoonnummer</label>  
+                    <div class="show" id="telefoonnummer">
+                    {{ data.telefoonnummer }}
+                    </div> 
+                </div>
+            </div>
+
+                    <label class="control-label" for="adres">adres</label>  
+                    <div class="show" id="adres">
+                    {{ data.adres }}
+                    </div> 
+
+            <div class="grid-x grid-padding-x">
+                <div class="cell medium-6">
+                    <label class="control-label" for="postcode">postcode</label>  
+                    <div class="show" id="postcode">
+                    {{ data.postcode }}
+                    </div> 
+                </div>
+
+                <div class="cell medium-6">
+                    <label class="control-label" for="woonplaats">woonplaats</label>  
+                    <div class="show" id="woonplaats">
+                    {{ data.woonplaats }}
+                    </div> 
+                </div>
+            </div>
+
+            <label class="control-label" for="gebruikerBeschrijving"><h1 style="color: var(--orange)">MOTIVATIE</h1></label>  
+            <div class="" id="gebruikerBeschrijving">
+            {{ data.gebruikerBeschrijving | raw }}
+            </div> 
+
+            <label class="control-label" for="cv">CV</label>  
+            <div class="" id="cv">
+            {{ data.cv }}
+            </div> 
+     
+        </div>
+    </div>
+
+{% endblock %}
+

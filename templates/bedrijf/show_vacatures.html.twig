@@ -1,0 +1,187 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mijn vacatures{% endblock %}
+
+{% block body %}
+
+
+    <script> 
+
+        function format ( vacatureId, sollicitaties ) {
+
+            var string1 = 
+                '<table cellpadding="5" cellspacing="0" border="0" style="padding-left: 50px;">'+
+                '<thead>'+
+                    '<th>Datum</th>'+
+                    '<th>Kandidaat</th>'+
+                    '<th>Uitgenodigd</th>'+
+
+                '</thead> '+
+                '<tbody>'
+            ;
+
+            var string2 = "";
+                
+            sollicitaties.forEach( (item) => {
+                if(vacatureId == item.vacature_id) {
+                    var uitgenodigd = "";
+                    if(item.uitgenodigd == "1") {
+                        uitgenodigd +=
+                            '<td>'+
+                            '<i class="invite fas fa-check" data-id=" '+item.id+' " data-value="TRUE"></i>'+
+                            '<td>'
+                    }
+                    else{
+                        uitgenodigd +=
+                            '<td>'+
+                            '<i class="invite fas fa-times" data-id=" '+item.id+' " data-value="FALSE"></i>'+
+                            '<td>'
+                    }
+
+                    var path = "{{ path('showSollicitantProfiel', {'id': "+item.kandidaat_id+"}) }}";
+                    
+                    string2 += 
+                        '<tr>'+
+                        '<td>'+item.sollicitatieDatum+'</td>'+
+                        '<td><a style="color: var(--orange)" href='+path+'>'+
+                        item.kandidaat_voornaam+' '+item.kandidaat_naam+
+                        '</a></td>'+
+                        uitgenodigd+
+                        '</tr>'
+                    ;
+                }
+            });
+
+            var string3 = 
+                '</tbody>'+
+            '</table>'
+            ;
+
+            var stringTotaal = string1+string2+string3;
+
+            return(stringTotaal);
+        }
+
+        $(document).ready(function() {
+            var table = $('#vacature-tabel').DataTable( {
+                "order": [[0, 'desc']]
+            } );
+
+            let sollicitaties = [
+                    {% for sollicitatie in sollicitaties %}
+                        {id: {{sollicitatie.id}},
+                        vacature_id: {{sollicitatie.vacature.id}},
+                        uitgenodigd: "{{sollicitatie.uitgenodigd}}",
+                        sollicitatieDatum: "{{sollicitatie.sollicitatieDatum | date('d-m-Y')}}",
+                        kandidaat_id: {{sollicitatie.kandidaat.id}},
+                        kandidaat_voornaam: "{{sollicitatie.kandidaat.voornaam}}",
+                        kandidaat_naam: "{{sollicitatie.kandidaat.naam}}" },
+                    {% endfor %}
+            ];
+            console.log(sollicitaties);
+
+
+            // Add event listener for opening and closing details
+            $('#vacature-tabel tbody').on('click', 'td.details-control', function () {
+                var tr = $(this).closest('tr');
+                var row = table.row( tr );
+                let vacatureId = $( tr ).attr("data-id");
+        
+                if ( row.child.isShown() ) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                }
+                else {
+                    // Open this row
+                    row.child( format(vacatureId, sollicitaties) ).show();
+                    tr.addClass('shown');
+            
+            
+                    $(".invite").click(function() {
+                        var value = $(this).attr("data-value");
+                        var sollicitatieId = $(this).attr("data-id");
+
+                        if(value == "TRUE") {
+                            $(this).removeClass("fa-check");
+                            $(this).addClass("fa-times");
+
+                        }
+
+                        else {
+
+                            $(this).removeClass("fa-times");
+                            $(this).addClass("fa-check");
+
+
+                        }
+                        $.ajax({
+                            url: "{{ path('uitnodigen') }}",
+                            method: "POST",
+                            data: {id: sollicitatieId},
+                        });
+                    });
+
+                }
+            } );
+
+        } );
+
+    </script>
+
+    <div class="grid-x grid-padding-x margin-body">
+        <div class="cell small-3">
+            plaatje
+        </div>
+
+        <div class="cell small-8">
+        
+            <div class="grid-x grid-padding-x">
+                <div class="cell medium-6">
+                    <h1 style="color: var(--orange)">MIJN VACATURES</h1>
+                </div>
+                <div class="cell medium-6">
+                    <a href="{{ path('newVacature') }}"><h3 style="color: var(--black)">vacature toevoegen</h3></a>
+                </div>
+            </div>
+
+            <div class="grid-x grid-padding-x">
+                <div class="cell">
+                    <table id="vacature-tabel" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Datum</th>
+                                <th>Titel</th>
+                                <th>Standplaats</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for vacature in vacatures %}
+                                <tr data-id="{{vacature.id}}">
+                                    <td>{{vacature.plaatsingsDatum | date('d-m-Y')}}</td>
+                                    <td><a style="color: var(--orange)" href="{{ path('detailpagina', {'id': vacature.id}) }}">{{vacature.titel}}</a></td>
+                                    <td>{{vacature.standplaats}}</td>
+                                    <td  class="details-control sol" orderable="FALSE">Sollicitaties</td>
+                                    <td><a style="color: var(--orange)" href="{{ path('editVacature', {'id': vacature.id}) }}">Bewerk</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Datum</th>
+                                <th>Titel</th>
+                                <th>Standplaats</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                     
+                </div>
+            </div>
+        </div>
+    </div>
+              
+{% endblock %}

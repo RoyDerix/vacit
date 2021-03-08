@@ -24,11 +24,12 @@ class KandidaatController extends BaseController
     {
         $user = $this->getUser();
         $user_id = $user->getId();
-        if($user_id == $id || $this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_BEDRIJF')) {
+        
+        if($user_id == $id || $this->isGranted('ROLE_ADMIN')) {
             $data = $this->ks->getKandidaat($id);
-            dd($data);
+            return array("data" => $data);
         }
-        return $this->redirectToRoute('homepage');
+        return $this->redirectToRoute('showKandidaatProfiel', ['id' => $user_id]);
     }
 
     /**
@@ -37,7 +38,7 @@ class KandidaatController extends BaseController
      */
     public function updateProfiel($id)
     {
-        $user = $this->getUser();
+        $user = $this->getUser(); 
         $user_id = $user->getId();
         if($user_id == $id || $this->isGranted('ROLE_ADMIN')) {
             $data = $this->ks->getKandidaat($id);
@@ -64,11 +65,29 @@ class KandidaatController extends BaseController
      */
     public function showSollicitaties($id)
     {
-        $data = $this->ss->getSollicitaties($id);
-        dump($data);
-        die();
-        //return array("data" => $data);
+        $user = $this->getUser();
+        $user_id = $user->getId();
+        if($id == 0){
+            $id = $user_id;
+        }
+        
+        if($user_id == $id || $this->isGranted('ROLE_ADMIN') ) {
+            $data = $this->ss->getSollicitaties($id);
+            return array("data" => $data);
+        }
+        return $this->redirectToRoute('homepage');
     }
+
+    /**
+     * @Route("/showWerkgeverProfiel/{id}", name="showWerkgeverProfiel")
+     * @Template()
+     */
+    public function showWerkgeverProfiel($id)
+    {
+        $data = $this->ks->getKandidaat($id);
+        return array("data" => $data);
+    }
+
 
     /**
      * @Route("/saveSollicitatie/{id}", name="saveSollicitatie")

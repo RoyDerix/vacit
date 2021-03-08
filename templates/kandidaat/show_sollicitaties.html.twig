@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mijn sollicitaties{% endblock %}
+
+{% block body %}
+
+    <script>
+
+        $(document).ready( function () {
+            $('#sollicitatie-table').DataTable( {
+            });
+        } );
+
+    </script>
+
+
+    <div class="grid-x grid-padding-x margin-body">
+        <div class="cell medium-3">
+            plaatje
+        </div>
+
+        <div class="cell medium-8">
+
+            <div class="grid-x grid-padding-x">
+                <div class="cell">
+                    <h1 style="color: var(--orange)">mijn sollicitaties</h1>
+                </div>
+            </div>
+
+            <div class="grid-x grid-padding-x">
+                <div class="cell">
+                    <table id="sollicitatie-table" class="hover row-border">
+                        <thead>
+                            <tr>
+                                <th>DATUM</th>
+                                <th>VACATURE</th>
+                                <th>BEDRIJF</th>
+                                <th>UITGENODIGD</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {% for record in data %}
+                                <tr>
+                                    <td>{{record.sollicitatieDatum | date('d-m-Y')}}</td>
+                                    <td>
+                                        <a style="color: var(--orange)" href="{{ path('detailpagina', {'id': record.vacature.id}) }}">
+                                            {{record.vacature.titel}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a style="color: var(--orange)" href="{{ path('showWerkgeverProfiel', {'id': record.vacature.bedrijf.id}) }}">
+                                            {{record.vacature.bedrijf.naam}}
+                                        </a>
+                                    </td>
+                                    
+                                    {% if record.uitgenodigd %}
+                                    <td><i class="fas fa-check no-point"></i></td>
+                                    {% else %}
+                                        <td></td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+{% endblock %}

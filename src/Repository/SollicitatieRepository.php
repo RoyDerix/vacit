@@ -59,11 +59,11 @@ class SollicitatieRepository extends ServiceEntityRepository
     public function uitnodigen($id) {
         $sollicitatie = $this->find($id);
         $uitgenodigd = $sollicitatie->getUitgenodigd();
-        if($uitgenodigd == "TRUE") {
-            $sollicitatie->setUitgenodigd("FALSE");
+        if($uitgenodigd == TRUE) {
+            $sollicitatie->setUitgenodigd(FALSE);
         }    
         else{
-            $sollicitatie->setUitgenodigd("TRUE");
+            $sollicitatie->setUitgenodigd(TRUE);
         }
 
         $em = $this->getEntityManager();

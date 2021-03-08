@@ -21,8 +21,16 @@ class HomepageController extends BaseController
     public function homepage()
     {
         $data = $this->vs->getAllVacatures();
-        //dump($data);
-        //die();
+        return array("data" => $data);
+    }
+
+    /**
+     * @Route("/alleVacatures", name="alleVacatures")
+     * @Template()
+     */
+    public function alleVacatures()
+    {
+        $data = $this->vs->getAllVacatures();
         return array("data" => $data);
     }
 
@@ -33,9 +41,9 @@ class HomepageController extends BaseController
     public function detailpagina($id)
     {
         $data = $this->vs->getVacature($id);
-/*         dump($data);
-        die(); */
-        return array("data" => $data);
+        $bedrijf_id = $data->getBedrijf()->getId();
+        $vacatures = $this->vs->getBedrijfVacatures($bedrijf_id);
+        return array("data" => $data, "vacatures" => $vacatures);
     }
 
     /**

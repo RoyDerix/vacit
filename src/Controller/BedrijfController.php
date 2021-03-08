@@ -25,10 +25,17 @@ class BedrijfController extends BaseController
     */
     public function showProfiel($id)
     {
-        $data = $this->bs->getBedrijf($id);
-        dump($data);
-        die();
-        //return array("data" => $data);
+        $user = $this->getUser();
+        $user_id = $user->getId();
+        if($id == 0){
+            $id = $user_id;
+        }
+        
+        if($user_id == $id || $this->isGranted('ROLE_ADMIN') ) {
+            $data = $this->ks->getKandidaat($id);
+            return array("data" => $data);
+        }
+        return $this->redirectToRoute('homepage');
     }
 
     /**
@@ -39,7 +46,7 @@ class BedrijfController extends BaseController
     {
         $user = $this->getUser();
         $user_id = $user->getId();
-        if($user_id == $id) {
+        if($user_id == $id || $this->isGranted('ROLE_ADMIN')) {
             $data = $this->bs->getBedrijf($id);
             return array("data" => $data);
         }
@@ -58,14 +65,36 @@ class BedrijfController extends BaseController
 
     /**
      * @Route("/showMijnVacatures/{id}", name="showMijnVacatures")
+     * @Template
     */
     public function showVacatures($id)
     {
-        $vacatures = $this->vs->getMyVacatures($id);
-        dump($vacatures);
-        die();
+        $user = $this->getUser();
+        $user_id = $user->getId();
+        if($id == 0){
+            $id = $user_id;
+        }
+        
+        if($user_id == $id || $this->isGranted('ROLE_ADMIN') ) {
+            $data = $this->vs->getMyVacatures($id);
+            $vacatures = $data['vacatures'];
+            $sollicitaties = $data['sollicitaties'];
+            return array("vacatures" => $vacatures, 'sollicitaties' => $sollicitaties);
+        }
+        return $this->redirectToRoute('homepage');
         //return array("data" => $data);
     }
+
+    /**
+     * @Route("/showSollicitantProfiel/{id}", name="showSollicitantProfiel")
+     * @Template()
+     */
+    public function showSollicitantProfiel($id)
+    {
+        $data = $this->ks->getKandidaat($id);
+        return array("data" => $data);
+    }
+
 
     /**
      * @Route("/newVacature", name="newVacature")
@@ -113,13 +142,12 @@ class BedrijfController extends BaseController
     }
 
     /**
-     * @Route("/uitnodigen/{id}", name="uitnodigen")
+     * @Route("/uitnodigen", name="uitnodigen")
     */
-    public function uitnodigen($id)
+    public function uitnodigen(Request $request)
     {
+        $id = $request->request->get('id');
         $sollicitatie = $this->ss->uitnodigen($id);
-        $bedrijf = $this->getUser();
-        $bedrijf_id = $bedrijf->getId();
-        return $this->redirectToRoute('showMijnVacatures', ['id' => $bedrijf_id]);
+        return($sollicitatie);
     } 
 }

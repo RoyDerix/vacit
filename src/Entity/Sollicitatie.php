@@ -24,7 +24,7 @@ class Sollicitatie
     private $vacature;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="boolean")
      */
     private $uitgenodigd;
 
@@ -56,12 +56,12 @@ class Sollicitatie
         return $this;
     }
 
-    public function getUitgenodigd(): ?string
+    public function getUitgenodigd(): ?bool
     {
         return $this->uitgenodigd;
     }
 
-    public function setUitgenodigd(?string $uitgenodigd): self
+    public function setUitgenodigd(?bool $uitgenodigd): self
     {
         $this->uitgenodigd = $uitgenodigd;
 

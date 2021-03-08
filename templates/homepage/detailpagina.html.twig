@@ -1,14 +1,99 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomepageController!{% endblock %}
+{% block title %}Profiel{% endblock %}
 
 {% block body %}
-    <a href="{{ path('saveSollicitatie', {'id':data.id} ) }}">Solliciteer!</a>
-    <h1>Detailpagina</h1>
-    <div>Titel: {{ data.titel }}</div>
-    <div>Niveau: {{ data.niveau.tekstveld }}</div>
-    <div>Platform: {{ data.platform.tekstveld }}</div>
-    <div>Bedrijf: {{ data.bedrijf.naam }}</div>
-    <div>Vacature: <p>{{ data.vacatureBeschrijving | raw }}</p></div>
+
+    <div class="grid-x grid-padding-x margin-body">
+        <div class="cell small-3">
+            plaatje
+        </div>
+
+        <div class="cell small-8">
+        
+            <div class="grid-x grid-padding-x">
+                <div class="cell">
+                    <h4>{{data.plaatsingsDatum | date('d M Y')}}</h4>
+                </div>
+            </div>
+
+            <div class="grid-x grid-padding-x">
+                <div class="cell">
+                    <h1>{{ data.titel }} voor {{ data.bedrijf.naam }}</h1>
+                </div>
+            </div>
+
+            <div class="grid-x grid-padding-x" style="margin-bottom: 20px">
+                <div class="cell medium-6">
+                    <h2 style="color: var(--orange); display: inline">niveau: </h2><h2 style="display: inline">{{data.niveau.tekstveld}}</h2>
+                </div>
+
+                <div class="cell medium-6" style="display: inline">
+                    <i class="fas fa-map-marker-alt"></i><h2 style="display: inline"> {{data.standplaats}}</h2>
+                </div>
+            </div>
+
+            <div class="grid-x grid-padding-x" style="margin-bottom: 20px">
+                <div class="cell">
+                    {{data.vacatureBeschrijving | raw}}
+                </div>
+            </div>
+
+            <div class="grid-x grid-padding-x" style="margin-bottom: 20px">
+                <div class="cell">
+                    <i class="fas fa-arrow-right" style="color: var(--orange); font-size: 42px"></i>
+                    <a style="color: var(--orange)" href="{{ path('saveSollicitatie', { 'id':data.id }) }}">
+                    <h1 style="display: inline">solliciteer direct</h1></a>
+                </div>
+            </div>
+
+            <div class="grid-x grid-padding-x">
+                <div class="cell">
+                    <h2>meer vacatures van {{data.bedrijf.naam}}</h2>
+                </div>
+            </div>
+
+            <div class="grid-x grid-padding-x">
+                <div class="cell">
+
+                    <table id="extra-table">
+                        <thead>
+                            <tr>
+                                <th>DATUM</th>
+                                <th>VACATURE</th>
+                                <th>NIVEAU</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {% for vacature in vacatures %}
+                                {% if vacature.id != data.id %}
+                                    <tr>
+                                        <td>{{vacature.plaatsingsDatum | date('d-m-Y')}}</td>
+                                        <td>
+                                            <a style="color: var(--orange)" href="{{ path('detailpagina', {'id': vacature.id}) }}">
+                                                {{vacature.titel}}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                {{vacature.niveau.tekstveld}}
+                                            </div>
+                                        </td>
+                                        
+
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+        
+     
+        </div>
+    </div>
 
 {% endblock %}

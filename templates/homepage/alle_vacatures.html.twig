@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Alle vacatures{% endblock %}
+
+{% block body %}
+
+    <script>
+
+        $(document).ready( function () {
+            $('#vacature-table').DataTable( {
+            });
+        } );
+
+    </script>
+
+    <div class="grid-x grid-padding-x margin-body">
+        <div class="cell">
+            <div class="grid-x grid-padding-x">
+                <div class="cell">
+                    <h1 style="color: var(--orange)">ALLE VACATURES</h1>
+                </div>
+            </div>
+
+            <div class="grid-x grid-padding-x">
+                <div class="cell">
+                    <table id="vacature-table" class="display">
+                        <thead>
+                            <tr>
+                                <th>PLAATSINGSDATUM</th>
+                                <th>VACATURE</th>
+                                <th>BEDRIJF</th>
+                                <th>BESCHRIJVING</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {% for record in data %}
+                                <tr>
+                                    <td>{{record.plaatsingsDatum | date('Y, M d')}}</td>
+                                    <td>
+                                        <a style="color: var(--orange)" href="{{ path('detailpagina', {'id': record.id}) }}">
+                                            {{record.titel}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a style="color: var(--orange)" href="{{ path('showWerkgeverProfiel', {'id': record.bedrijf.id}) }}">
+                                            {{record.bedrijf.naam}}
+                                        </a>
+                                    </td>
+                                    
+                                    <td style="max-width: 100px">{{ record.vacatureBeschrijving | striptags | u.truncate(100, '...') }}</td>
+
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

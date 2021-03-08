@@ -42,25 +42,43 @@ class VacatureService {
         return($vacature);
     }
 
+    public function getBedrijfVacatures($id) {
+
+        $vacatures = $this->rep->getMyVacatures($id);
+        return($vacatures);
+    }
+
     public function getMyVacatures($id) {
         $data = [];
+        $vacatures = [];
+        $sollicitaties = [];
         $vacatures = $this->rep->getMyVacatures($id);
         foreach($vacatures as $vacature) {
             $vacature_id = $vacature->getId();
-            $sollicitaties = $this->ss->getVacatureSollicitaties($vacature_id);
-            $thisdata = ["vacature" => $vacature,
-                        "sollicitaties" => $sollicitaties];
-            $data[] = $thisdata;
+            $dezeSollicitaties = $this->ss->getVacatureSollicitaties($vacature_id);
+            foreach($dezeSollicitaties as $sollicitatie) {
+                $sollicitaties [] = $sollicitatie;
+            }
         }
+
+        $data = ['vacatures' => $vacatures, 'sollicitaties' => $sollicitaties];
         return($data);
     }
 
     public function saveVacature($params){
-        $datum = new \DateTime();
+        if(isset($params['plaatsingsDatum'])) {
+            $datum = \DateTime::createFromFormat('d-m-Y', $params['plaatsingsDatum']);
+        }
+        else {
+            $datum = new \DateTime();
+        }
         $niveau = $this->nps->getNiveauPlatform($params['niveau']);
         $platform = $this->nps->getNiveauPlatform($params['platform']);
         $bedrijf = $this->security->getUser();
-        $id = "";
+        $vacatureBeschrijving = strip_tags($params['vacatureBeschrijving'], '<br><b><i><div>');
+        $vacatureBeschrijving = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $vacatureBeschrijving);
+        
+        $id = null;
         if(isset($params['id'])) {
             $id = $params['id'];
         }
@@ -71,7 +89,7 @@ class VacatureService {
                     "platform" => $platform,
                     "titel" => $params['titel'],
                     "standplaats" => $params['standplaats'],
-                    "vacatureBeschrijving" => $params['vacatureBeschrijving'],
+                    "vacatureBeschrijving" => $vacatureBeschrijving,
                     "plaatsingsDatum" => $datum,
                     "bedrijf" => $bedrijf
         );
@@ -93,7 +111,7 @@ class VacatureService {
         $kandidaat = $this->security->getUser();
         $data = array(
                     "vacature" => $vacature,
-                    "uitgenodigd" => "FALSE",
+                    "uitgenodigd" => FALSE,
                     "sollicitatieDatum" => $date,
                     "kandidaat" => $kandidaat
         );

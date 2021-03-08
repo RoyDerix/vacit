@@ -3,60 +3,57 @@
 {% block title %}Update je profiel{% endblock %}
 
 {% block body %}
+    <div class="grid-x grid-padding-x margin-body">
+        <div class="cell small-3">
+            plaatje
+        </div>
 
-    <form class="form-horizontal" action="{{ path('saveBedrijfProfiel') }}" method="POST">
-        <fieldset>
+        <div class="cell small-8">
 
-            <legend>Update je profiel</legend>
+            <form class="form-horizontal" action="{{ path('saveBedrijfProfiel') }}" method="POST">
+                <fieldset>
 
-            <div class="form-group">
-                <input id="id" name="id" type="hidden" value="{{ data.id }}" class="form-control input-md" required="">                
-            </div>
+                    <legend><h1 style="color: var(--orange)">Update je profiel</h1></legend>
 
-            <div class="form-group">
-                <label class="control-label" for="naam">Naam</label>  
-                <input id="naam" name="naam" type="text" value="{{ data.naam }}" class="form-control input-md" required="">                    
-            </div>
+                    <input id="id" name="id" type="hidden" value="{{ data.id }}" class="form-control input-md" required="">                
 
-            <div class="form-group">
-                <label class="control-label" for="email">Email-adres</label>  
-                <input id="email" name="email" type="text" value="{{ data.email }}" class="form-control input-md" required="">
-            </div>
+                    <label class="control-label" for="naam">Naam</label>  
+                    <input id="naam" name="naam" type="text" value="{{ data.naam }}" class="form-control input-md" required="">                    
 
-            <div class="form-group">
-                <label class="control-label" for="telefoonnummer">Telefoonnummer</label>  
-                <input id="telefoonnummer" name="telefoonnummer" type="text" value="{{ data.telefoonnummer }}" class="form-control input-md" required="">
-            </div>
-        
-            <div class="form-group">
-                <label class="control-label" for="adres">Adres</label>  
-                <input id="adres" name="adres" type="text" value="{{ data.adres }}" class="form-control input-md" required="">
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="postcode">Postcode</label>  
-                <input id="postcode" name="postcode" type="text" value="{{ data.postcode }}" class="form-control input-md" required="">
-            </div>
+                    <label class="control-label" for="email">Email-adres</label>  
+                    <input id="email" name="email" type="text" value="{{ data.email }}" class="form-control input-md" required="">
 
-            <div class="form-group">
-                <label class="control-label" for="woonplaats">Plaats</label>  
-                <input id="woonplaats" name="woonplaats" type="text" value="{{ data.woonplaats }}" class="form-control input-md" required="">
-            </div>
+                    <label class="control-label" for="telefoonnummer">Telefoonnummer</label>  
+                    <input id="telefoonnummer" name="telefoonnummer" type="text" value="{{ data.telefoonnummer }}" class="form-control input-md" required="">
+                
+                    <label class="control-label" for="adres">Adres</label>  
+                    <input id="adres" name="adres" type="text" value="{{ data.adres }}" class="form-control input-md" required="">
+                    
+                    <div class="grid-x grid-padding-x">
+                        <div class="cell medium-6">
+                            <label class="control-label" for="postcode">Postcode</label>  
+                            <input id="postcode" name="postcode" type="text" value="{{ data.postcode }}" class="form-control input-md" required="">
+                        </div>
 
-            <div class="form-group">
-                <label class="control-label" for="gebruikerBeschrijving">Beschrijving bedrijf</label>  
-                <textarea id="gebruikerBeschrijving" name="gebruikerBeschrijving" rows="10" cols="30" class="form-control input-md" required="">{{ data.gebruikerBeschrijving }}</textarea>
-            </div>
+                        <div class="cell medium-6">
+                            <label class="control-label" for="woonplaats">Plaats</label>  
+                            <input id="woonplaats" name="woonplaats" type="text" value="{{ data.woonplaats }}" class="form-control input-md" required="">
+                        </div>
+                    </div>
 
-            <div class="form-group">
-                <label class="control-label" for="cv">Profielfoto</label>
-                <input id="profielfoto" name="profielfoto" class="input-file" type="file">
-            </div>
+                    <label class="control-label" for="gebruikerBeschrijving">Beschrijving bedrijf</label>  
+                    <textarea id="gebruikerBeschrijving" name="gebruikerBeschrijving" rows="10" class="richtext" required="">{{ data.gebruikerBeschrijving }}</textarea>
 
-            <div class="form-group">
-                <input type="submit" value="Save">
-            </div>
+                    <div class="form-group">
+                        <label class="control-label" for="cv">Profielfoto</label>
+                        <input id="profielfoto" name="profielfoto" class="input-file" type="file">
+                    </div>
 
-        </fieldset>
-    </form>
+                    <i class="fas fa-arrow-right" style="color: var(--orange); font-size: 36px"></i><input type="submit" value="OPSLAAN">
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
 
 {% endblock %}

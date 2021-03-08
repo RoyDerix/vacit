@@ -4,61 +4,64 @@
 
 {% block body %}
 
-    <form class="form-horizontal" action="{{ path('saveVacature') }}" method="POST">
-        <fieldset>
+    <div class="grid-x grid-padding-x margin-body">
+        <div class="cell small-3">
+            plaatje
+        </div>
 
-            <legend>Bewerk je vacature</legend>
+        <div class="cell small-8">
 
-            <div class="form-group">
-                <input id="id" name="id" type="hidden" value="{{ data.id }}" class="form-control input-md" required="">                
-            </div>
+            <form class="form-horizontal" action="{{ path('saveVacature') }}" method="POST">
+                <fieldset>
 
-            <div class="form-group">
-                <label class="control-label" for="titel">Titel</label>  
-                <input id="titel" name="titel" type="text" value="{{ data.titel }}" class="form-control input-md" required="">                
-            </div>
-                        
-            <div class="form-group">
-                <label class="control-label" for="niveau">Niveau</label>  
-                <select id="niveau" name="niveau" class="form-control input-md"> 
-                    {% for niveau in niveaus %}
-                        <option value="{{ niveau.id }}"
-                        {% if  niveau.id  ==  data.niveau.id  %}
-                            selected="selected"
-                        {% endif %}
-                        >{{ niveau.tekstveld }}</option>
-                    {% endfor %}
-                </select>               
-            </div>
+                    <legend><h1 style="color: var(--orange)">Bewerk je vacature</h1></legend>
 
-            <div class="form-group">
-                <label class="control-label" for="platform">Platform</label>  
-                <select id="platform" name="platform" class="form-control input-md"> 
-                    {% for platform in platforms %}
-                        <option value="{{ platform.id }}"
-                        {% if  platform.id  ==  data.platform.id  %}
-                            selected="selected"
-                        {% endif %}
-                        >{{ platform.tekstveld }}</option>
-                    {% endfor %}
-                </select>               
-            </div>
+                    <input id="id" name="id" type="hidden" value="{{ data.id }}" class="form-control input-md" required="">    
 
-            <div class="form-group">
-                <label class="control-label" for="naam">Standplaats</label>  
-                <input id="standplaats" name="standplaats" type="text" value="{{ data.standplaats }}" class="form-control input-md" required="">                    
-            </div>
+                    <input id="plaatsingsDatum" name="plaatsingsDatum" type="hidden" value="{{ data.plaatsingsDatum | date('d-m-Y') }}" class="form-control input-md" required="">                
 
-            <div class="form-group">
-                <label class="control-label" for="email">Vacature beschrijving</label>  
-                <input id="vacatureBeschrijving" name="vacatureBeschrijving" type="text" value="{{ data.vacatureBeschrijving }}" class="form-control input-md" required="">
-            </div>
+                    <label class="control-label" for="titel">Titel</label>  
+                    <input id="titel" name="titel" type="text" value="{{ data.titel }}" class="form-control input-md" required="">
 
-            <div class="form-group">
-                <input type="submit" value="Save">
-            </div>
+                    <div class="grid-x grid-padding-x">
+                        <div class="cell medium-6">
+                            <label class="control-label" for="niveau">Niveau</label>  
+                            <select id="niveau" name="niveau" class="form-control input-md form-select"> 
+                                {% for niveau in niveaus %}
+                                    <option value="{{ niveau.id }}"
+                                    {% if  niveau.id  ==  data.niveau.id  %}
+                                        selected="selected"
+                                    {% endif %}
+                                    >{{ niveau.tekstveld }}</option>
+                                {% endfor %}
+                            </select>               
+                        </div>
 
-        </fieldset>
-    </form>
+                        <div class="cell medium-6">
+                            <label class="control-label" for="platform">Platform</label>  
+                            <select id="platform" name="platform" class="form-control input-md form-select"> 
+                                {% for platform in platforms %}
+                                    <option value="{{ platform.id }}"
+                                    {% if  platform.id  ==  data.platform.id  %}
+                                        selected="selected"
+                                    {% endif %}
+                                    >{{ platform.tekstveld }}</option>
+                                {% endfor %}
+                            </select>               
+                        </div>
+                    </div>
+
+                    <label class="control-label" for="naam">Standplaats</label>  
+                    <input id="standplaats" name="standplaats" type="text" value="{{ data.standplaats }}" class="form-control input-md" required="">                    
+
+                    <label class="control-label" for="vacatureBeschrijving">Vacature beschrijving</label>  
+                    <textarea id="vacatureBeschrijving" name="vacatureBeschrijving" rows="10" class="richtext" required="">{{ data.vacatureBeschrijving }}</textarea>
+
+                    <i class="fas fa-arrow-right" style="color: var(--orange); font-size: 36px"></i><input type="submit" value="OPSLAAN">
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
 
 {% endblock %}
