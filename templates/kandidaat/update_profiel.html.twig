@@ -3,6 +3,84 @@
 {% block title %}Update je profiel{% endblock %}
 
 {% block body %}
+
+
+    <script>
+        $(document).ready(function() {
+            let uploader = new ss.SimpleUpload({
+                button: "upload",
+                url: "{{ path('upload_file') }}",
+                name: 'file', // upload parameter name die gebruikt wordt in de controller
+                responseType: 'json',
+                allowedExtensions: ['png', 'jpg', 'jpeg', 'pdf'],
+                hoverClass: 'hover-class-upload',
+                focusClass: 'hover-class-upload',
+                multiple: false,
+                disabledClass: 'ui-state-disabled',
+                autoSubmit: true,
+                onSizeError: function() {
+                    alert('File may not exceed 100MB');
+                },
+                onExtError: function() {
+                    alert('Invalid file type. Please use a PNG, JPG or JPEG or PDF file');
+                },
+                onSubmit: function( filename, extension, uploadBtn, fileSize ) {
+                    /// Bijvoorbeeld een overlay of een spinner starten...
+                    return(true);
+                },
+                onComplete: function (filename, response) {
+                    if(response.success === false) {
+                        alert(response.errors);
+                    } else {
+                        $('#cv').val(response.file_id);
+                        $('#cv_naam').val(filename);
+                        /// Doe iets met response.file_id (path naar de geuploade file)  
+                        $('#upload').fadeOut();
+                        $('#file-name').html(filename);
+                        $('#file-uploaded').fadeIn();
+                    }
+                }
+            });
+
+            let imgUploader = new ss.SimpleUpload({
+                button: "img-upload",
+                url: "{{ path('upload_file') }}",
+                name: 'file', // upload parameter name die gebruikt wordt in de controller
+                responseType: 'json',
+                allowedExtensions: ['png', 'jpg', 'jpeg', 'pdf'],
+                hoverClass: 'hover-class-upload',
+                focusClass: 'hover-class-upload',
+                multiple: false,
+                disabledClass: 'ui-state-disabled',
+                autoSubmit: true,
+                onSizeError: function() {
+                    alert('File may not exceed 100MB');
+                },
+                onExtError: function() {
+                    alert('Invalid file type. Please use a PNG, JPG or JPEG or PDF file');
+                },
+                onSubmit: function( filename, extension, uploadBtn, fileSize ) {
+                    /// Bijvoorbeeld een overlay of een spinner starten...
+                    return(true);
+                },
+                onComplete: function (filename, response) {
+                    if(response.success === false) {
+                        alert(response.errors);
+                    } else {
+                        $('#profielfoto').val(response.file_id);
+                        /// Doe iets met response.file_id (path naar de geuploade file)  
+                        $('#img-upload').fadeOut();
+                        $('#img-name').html(filename);
+                        $('#img-uploaded').fadeIn();
+                    }
+                }
+            });
+        });
+
+
+    </script>
+
+    
     <div class="grid-x grid-padding-x margin-body">
         <div class="cell small-3">
             plaatje
@@ -15,7 +93,13 @@
 
                     <legend><h1 style="color: var(--orange)">Update je profiel</h1></legend>
 
-                    <input id="id" name="id" type="hidden" value="{{ data.id }}" class="form-control input-md" required="">                
+                    <input id="id" name="id" type="hidden" value="{{ data.id }}" class="form-control input-md" required=""> 
+
+                    <input id="cv" name="cv" type="hidden" value="{{ data.cv }}" class="form-control input-md" required="">
+
+                    <input id="cv_naam" name="cv_naam" type="hidden" value="{{ data.cvNaam }}" class="form-control input-md" required="">        
+
+                    <input id="profielfoto" name="profielfoto" type="hidden" value="{{ data.profielfoto }}" class="form-control input-md" required="">
 
                     <div class="grid-x grid-padding-x">
                         <div class="cell medium-6">
@@ -59,13 +143,39 @@
                         </div>
                     </div>
 
-                    <label class="control-label" for="gebruikerBeschrijving">Motivatie</label>  
-                    <textarea id="gebruikerBeschrijving" name="gebruikerBeschrijving" rows="10" class="richtext" required="">{{ data.gebruikerBeschrijving }}</textarea>
+                    <div class="grid-x grid-padding-x" style="margin-bottom: 20px">
+                        <div class="cell">   
+                            <label class="control-label" for="gebruikerBeschrijving">Motivatie</label>  
+                            <textarea id="gebruikerBeschrijving" name="gebruikerBeschrijving" rows="10" class="richtext" required="">{{ data.gebruikerBeschrijving }}</textarea>
+                        </div>
+                    </div>
 
-                    <label class="control-label" for="cv">CV</label>
-                    <input id="cv" name="cv" class="input-file" type="file">
+                    <div class="grid-x grid-padding-x" style="margin-bottom: 20px">
+                        <div class="cell small-6">
+                            <button class="upload-button" id="upload" name="cv-upload" type="button"><h3>Upload CV</h3></button>
 
-                    <i class="fas fa-arrow-right" style="color: var(--orange); font-size: 36px"></i><input type="submit" value="OPSLAAN">
+                            <div id="file-uploaded" style="display: none">
+                                <i class="fas fa-file-pdf"></i>
+                                <h3 id="file-name" style="color: black; display: inline"></h3>
+                            </div>
+                        </div>
+
+                        <div class="cell small-6">
+                            <button class="upload-button" id="img-upload" name="img-upload" type="button"><h3>Upload Profielfoto</h3></button>
+
+                            <div id="img-uploaded" style="display: none">
+                                <i class="fas fa-file-image"></i>
+                                <h3 id="img-name" style="color: black; display: inline"></h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid-x grid-padding-x">
+                        <div class="cell">   
+                            <i class="fas fa-arrow-right" style="color: var(--orange); font-size: 36px"></i>
+                            <input id="submit" type="submit" value="OPSLAAN">
+                        </div>
+                    </div>
 
                 </fieldset>
             </form>

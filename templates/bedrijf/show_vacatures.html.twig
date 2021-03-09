@@ -38,12 +38,11 @@
                             '<td>'
                     }
 
-                    var path = "{{ path('showSollicitantProfiel', {'id': "+item.kandidaat_id+"}) }}";
                     
                     string2 += 
                         '<tr>'+
                         '<td>'+item.sollicitatieDatum+'</td>'+
-                        '<td><a style="color: var(--orange)" href='+path+'>'+
+                        '<td><a style="color: var(--orange)" href='+item.path+'>'+
                         item.kandidaat_voornaam+' '+item.kandidaat_naam+
                         '</a></td>'+
                         uitgenodigd+
@@ -75,11 +74,10 @@
                         sollicitatieDatum: "{{sollicitatie.sollicitatieDatum | date('d-m-Y')}}",
                         kandidaat_id: {{sollicitatie.kandidaat.id}},
                         kandidaat_voornaam: "{{sollicitatie.kandidaat.voornaam}}",
-                        kandidaat_naam: "{{sollicitatie.kandidaat.naam}}" },
+                        kandidaat_naam: "{{sollicitatie.kandidaat.naam}}",
+                        path: "{{ path('showSollicitantProfiel', {'id': sollicitatie.kandidaat.id }) }}" },
                     {% endfor %}
             ];
-            console.log(sollicitaties);
-
 
             // Add event listener for opening and closing details
             $('#vacature-tabel tbody').on('click', 'td.details-control', function () {

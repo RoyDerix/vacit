@@ -86,6 +86,11 @@ class Gebruiker implements UserInterface
      */
     private $profielfoto;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $cv_naam;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -283,6 +288,18 @@ class Gebruiker implements UserInterface
     public function setProfielfoto(string $profielfoto): self
     {
         $this->profielfoto = $profielfoto;
+
+        return $this;
+    }
+
+    public function getCvNaam(): ?string
+    {
+        return $this->cv_naam;
+    }
+
+    public function setCvNaam(?string $cv_naam): self
+    {
+        $this->cv_naam = $cv_naam;
 
         return $this;
     }

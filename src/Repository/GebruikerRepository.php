@@ -82,6 +82,18 @@ class GebruikerRepository extends ServiceEntityRepository implements PasswordUpg
         $gebruiker->setPostcode($params['postcode']);
         $gebruiker->setWoonplaats($params['woonplaats']);
         $gebruiker->setGebruikerBeschrijving($params['gebruikerBeschrijving']);
+        
+        if(isset($params['cv'])) {
+            $gebruiker->setCv($params['cv']);
+        }
+
+        if(isset($params['cv_naam'])) {
+            $gebruiker->setCvNaam($params['cv_naam']);
+        }
+
+        if(isset($params['profielfoto'])) {
+            $gebruiker->setProfielfoto($params['profielfoto']);
+        }
 
         $em = $this->getEntityManager();
         $em->persist($gebruiker);

@@ -4,6 +4,42 @@
 
 {% block body %}
 
+    <script>
+        $(document).ready(function() {
+            let uploader = new ss.SimpleUpload({
+                button: "upload",
+                url: "{{ path('upload_file') }}",
+                name: 'file', // upload parameter name die gebruikt wordt in de controller
+                responseType: 'json',
+                allowedExtensions: ['png', 'jpg', 'jpeg', 'pdf'],
+                hoverClass: 'hover-class-upload',
+                focusClass: 'hover-class-upload',
+                multiple: false,
+                disabledClass: 'ui-state-disabled',
+                autoSubmit: true,
+                onSizeError: function() {
+                    alert('File may not exceed 100MB');
+                },
+                onExtError: function() {
+                    alert('Invalid file type. Please use a PNG, JPG or JPEG or PDF file');
+                },
+                onSubmit: function( filename, extension, uploadBtn, fileSize ) {
+                    /// Bijvoorbeeld een overlay of een spinner starten...
+                    return(true);
+                },
+                onComplete: function (filename, response) {
+                    if(response.success === false) {
+                        alert(response.errors);
+                    } else {
+                        /// Doe iets met response.file_id (path naar de geuploade file)
+                        
+                    }
+                }
+            });
+        });
+    </script>
+
+
 
     <div class="grid-x grid-padding-x margin-body">
         <div class="cell small-3">
@@ -64,8 +100,9 @@
                     <label class="control-label" for="gebruikerBeschrijving"><h1 style="color: var(--orange)">MOTIVATIE</h1></label>  
                     <textarea id="gebruikersBeschrijving" name="gebruikerBeschrijving" class="richtext" rows="10" required=""></textarea>
 
-                    <label class="control-label" for="cv">CV</label>
-                    <input id="cv" name="cv" class="input-file" type="file">
+                    <div id="upload"
+                        style="width: 200px; height: 200px; background-color: #F00; cursor: pointer">
+                    </div>
 
                     <i class="fas fa-arrow-right" style="color: var(--orange); font-size: 36px"></i><input type="submit" value="OPSLAAN">
 
