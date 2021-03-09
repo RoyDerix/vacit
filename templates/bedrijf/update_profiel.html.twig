@@ -3,12 +3,55 @@
 {% block title %}Update je profiel{% endblock %}
 
 {% block body %}
+
+    <script>
+        $(document).ready(function() {
+            let imgUploader = new ss.SimpleUpload({
+                button: "img-upload",
+                url: "{{ path('upload_file') }}",
+                name: 'file', // upload parameter name die gebruikt wordt in de controller
+                responseType: 'json',
+                allowedExtensions: ['png', 'jpg', 'jpeg'],
+                hoverClass: 'hover-class-upload',
+                focusClass: 'hover-class-upload',
+                multiple: false,
+                disabledClass: 'ui-state-disabled',
+                autoSubmit: true,
+                onSizeError: function() {
+                    alert('File may not exceed 100MB');
+                },
+                onExtError: function() {
+                    alert('Invalid file type. Please use a PNG, JPG or JPEG file');
+                },
+                onSubmit: function( filename, extension, uploadBtn, fileSize ) {
+                    /// Bijvoorbeeld een overlay of een spinner starten...
+                    return(true);
+                },
+                onComplete: function (filename, response) {
+                    if(response.success === false) {
+                        alert(response.errors);
+                    } else {
+                        $('#profielfoto').val(response.file_id);
+                        $('#img-upload').fadeOut();
+                        $('#img-name').html(filename);
+                        $('#img-uploaded').fadeIn();
+                    }
+                }
+            });
+        });
+
+
+    </script>
+
+
     <div class="grid-x grid-padding-x margin-body">
-        <div class="cell small-3">
-            plaatje
+        <div class="cell medium-3 large-2" style="min-width: 200px">
+            <div class="medium-centered" style="max-width: 200px;">
+                <img class="medium-centered" src="{{asset(data.profielfoto)}}">
+            </div>
         </div>
 
-        <div class="cell small-8">
+        <div class="cell medium-8 large-offset-1">
 
             <form class="form-horizontal" action="{{ path('saveBedrijfProfiel') }}" method="POST">
                 <fieldset>
@@ -41,12 +84,22 @@
                         </div>
                     </div>
 
-                    <label class="control-label" for="gebruikerBeschrijving">Beschrijving bedrijf</label>  
-                    <textarea id="gebruikerBeschrijving" name="gebruikerBeschrijving" rows="10" class="richtext" required="">{{ data.gebruikerBeschrijving }}</textarea>
+                    <div class="grid-x grid-padding-x" style="margin-bottom: 20px">
+                        <div class="cell">   
+                            <label class="control-label" for="gebruikerBeschrijving">Beschrijving bedrijf</label>  
+                            <textarea id="gebruikerBeschrijving" name="gebruikerBeschrijving" rows="10" class="richtext" required="">{{ data.gebruikerBeschrijving }}</textarea>
+                        </div>
+                    </div>
 
-                    <div class="form-group">
-                        <label class="control-label" for="cv">Profielfoto</label>
-                        <input id="profielfoto" name="profielfoto" class="input-file" type="file">
+                    <div class="grid-x grid-padding-x" style="margin-bottom: 20px">
+                        <div class="cell small-6">
+                            <button class="upload-button" id="img-upload" name="img-upload" type="button"><h3>Upload Profielfoto</h3></button>
+
+                            <div id="img-uploaded" style="display: none">
+                                <i class="fas fa-file-image"></i>
+                                <h3 id="img-name" style="color: black; display: inline"></h3>
+                            </div>
+                        </div>
                     </div>
 
                     <i class="fas fa-arrow-right" style="color: var(--orange); font-size: 36px"></i><input type="submit" value="OPSLAAN">

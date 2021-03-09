@@ -10,7 +10,8 @@
             color: '#FFF',
             slides: [
                 {% for record in data %}
-                    { src: "{{ asset(record.platform.platformIcoon) }}" },
+                    { src: "{{ asset(record.platform.platformIcoon) }}",
+                     },
                 {% endfor %}
             ]
         });
@@ -22,8 +23,8 @@
         <div class="cell medium-3 menu-groot" style="margin-top: 30px; margin-bottom: 30px"> 
             <div id="vegas-carousel" class="hex" style="height: 200px; width: 200px;">
             </div>
-
         </div>
+
         <div class="cell medium-9 margin-body">
             {% for record in data | sort((a,b) => b.plaatsingsDatum <=> a.plaatsingsDatum) %}
                 {% if loop.index <= 5 %}
