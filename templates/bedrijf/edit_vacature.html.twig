@@ -5,18 +5,37 @@
 {% block body %}
 
     <div class="grid-x grid-padding-x margin-body">
-        <div class="cell small-3">
-            plaatje
+        <div class="cell medium-3 large-2 pic-large" style="min-width: 200px">
+            <div class="medium-centered" style="max-width: 200px;">
+                <img class="medium-centered" src="{{asset(data.bedrijf.profielfoto)}}">
+            </div>
         </div>
 
-        <div class="cell small-8">
+        <div class="cell medium-8 large-offset-1">
+        
+            <div class="grid-x">
+                <div class="cell small-4 pic-small" style="margin-bottom: 20px">
+                    <img style="width: 120px" src="{{asset(data.bedrijf.profielfoto)}}">
+                </div>
+
+                <div class="cell small-8 medium-12">
+                    <div class="grid-x grid-padding-x">
+                        <div class="cell medium-6">
+                            <h1 style="color: var(--orange)">bewerk vacature</h1>
+                        </div>
+                        <div class="cell medium-6">
+                            <a href="{{ path('deleteVacature', {'id': data.id}) }}"><h3 style="color: var(--black)">vacature verwijderen</h3></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <form class="form-horizontal" action="{{ path('saveVacature') }}" method="POST">
                 <fieldset>
 
-                    <legend><h1 style="color: var(--orange)">Bewerk je vacature</h1></legend>
+                    <input id="id" name="id" type="hidden" value="{{ data.id }}" class="form-control input-md" required="">   
 
-                    <input id="id" name="id" type="hidden" value="{{ data.id }}" class="form-control input-md" required="">    
+                    <input id="bedrijf_id" name="bedrijf_id" type="hidden" value="{{ data.bedrijf.id }}" class="form-control input-md" required="">    
 
                     <input id="plaatsingsDatum" name="plaatsingsDatum" type="hidden" value="{{ data.plaatsingsDatum | date('d-m-Y') }}" class="form-control input-md" required="">                
 

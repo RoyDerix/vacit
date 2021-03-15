@@ -5,18 +5,38 @@
 {% block body %}
 
     <div class="grid-x grid-padding-x margin-body">
-        <div class="cell small-3">
-            plaatje
+        <div class="cell medium-3 large-2 pic-large" style="min-width: 200px">
+            <div class="medium-centered" style="max-width: 200px;">
+                <img class="medium-centered" src="{{asset(app.user.profielfoto)}}">
+            </div>
         </div>
 
-        <div class="cell small-8">
+        <div class="cell medium-8 large-offset-1">
+        
+            <div class="grid-x">
+                <div class="cell small-4 pic-small" style="margin-bottom: 20px">
+                    <img style="width: 120px" src="{{asset(app.user.profielfoto)}}">
+                </div>
+
+                <div class="cell small-8 medium-12">
+                    <h1 style="color: var(--orange)">nieuwe vacature</h1>
+                </div>
+            </div>
+
             <form class="form-horizontal" action="{{ path('saveVacature') }}" method="POST">
                 <fieldset>
 
-                    <legend><h1 style="color: var(--orange)">Maak een nieuwe vacature</h1></legend>
 
-                    <label class="control-label" for="titel">Titel</label>  
-                    <input id="titel" name="titel" type="text" class="form-control input-md" required="">                
+
+                    <input id="bedrijf_id" name="bedrijf_id" type="hidden" value="{{ app.user.id }}" class="form-control input-md" required="">    
+
+                    
+                    <div class="grid-x grid-padding-x" style="margin-bottom: 20px">
+                        <div class="cell">
+                            <label class="control-label" for="titel">Titel</label>  
+                            <input id="titel" name="titel" type="text" class="form-control input-md" required="">
+                        </div>
+                    </div>              
 
                     <div class="grid-x grid-padding-x">       
                         <div class="cell medium-6">
@@ -38,11 +58,19 @@
                         </div>
                     </div>
 
-                    <label class="control-label" for="naam">Standplaats</label>  
-                    <input id="standplaats" name="standplaats" type="text" class="form-control input-md" required="">                    
-
-                    <label class="control-label" for="vacatureBeschrijving">Vacature beschrijving</label>  
-                    <textarea id="vacatureBeschrijving" name="vacatureBeschrijving" rows="10" class="richtext" required=""></textarea>
+                    <div class="grid-x grid-padding-x" style="margin-bottom: 20px">
+                        <div class="cell">
+                            <label class="control-label" for="naam">Standplaats</label>  
+                            <input id="standplaats" name="standplaats" type="text" class="form-control input-md" required="">
+                        </div>
+                    </div>               
+                    
+                    <div class="grid-x grid-padding-x" style="margin-bottom: 20px">
+                        <div class="cell"> 
+                            <label class="control-label" for="vacatureBeschrijving">Vacature beschrijving</label>  
+                            <textarea id="vacatureBeschrijving" name="vacatureBeschrijving" rows="10" class="richtext" required=""></textarea>
+                        </div>
+                    </div>
 
                     <i class="fas fa-arrow-right" style="color: var(--orange); font-size: 36px"></i><input type="submit" value="OPSLAAN">
 

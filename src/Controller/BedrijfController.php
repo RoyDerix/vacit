@@ -82,7 +82,6 @@ class BedrijfController extends BaseController
             return array("vacatures" => $vacatures, 'sollicitaties' => $sollicitaties);
         }
         return $this->redirectToRoute('homepage');
-        //return array("data" => $data);
     }
 
     /**
@@ -111,11 +110,19 @@ class BedrijfController extends BaseController
      * @Template()
     */
     public function editVacature($id) {
+        
         $niveaus = $this->nps->getAllNiveaus();
         $platforms = $this->nps->getAllPlatforms();
         $data = $this->vs->getVacature($id);
+        $bedrijf_id = $data->getBedrijf()->getId();
+        $user = $this->getUser();
+        $user_id = $user->getId();
+        if($user_id == $bedrijf_id || $this->isGranted('ROLE_ADMIN')) {
 
-        return array("data" => $data, "niveaus" => $niveaus, "platforms" => $platforms);
+            return array("data" => $data, "niveaus" => $niveaus, "platforms" => $platforms);
+        }
+
+        return $this->redirectToRoute('showMijnVacatures', ['id' => $user_id]);
     }
 
     /**
@@ -135,10 +142,19 @@ class BedrijfController extends BaseController
     */
     public function deleteVacature($id)
     {
-        $vacature = $this->vs->deleteVacature($id);
-        $bedrijf = $this->getUser();
-        $bedrijf_id = $bedrijf->getId();
-        return $this->redirectToRoute('showMijnVacatures', ['id' => $bedrijf_id]);
+
+        $vacature = $this->vs->getVacature($id);
+        $bedrijf_id = $vacature->getBedrijf()->getId();
+
+        $user = $this->getUser();
+        $user_id = $user->getId();
+
+        if($user_id == $bedrijf_id || $this->isGranted('ROLE_ADMIN')) {
+
+            $delete = $this->vs->deleteVacature($id);
+        }
+
+        return $this->redirectToRoute('showMijnVacatures', ['id' => $user_id]);
     }
 
     /**

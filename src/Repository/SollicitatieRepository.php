@@ -29,6 +29,11 @@ class SollicitatieRepository extends ServiceEntityRepository
         return($sollicitaties);
     }
 
+    public function findDuplicate($vacature_id, $kandidaat_id) {
+        $sollicitatie = $this->findBy(array("vacature" => $vacature_id, "kandidaat" => $kandidaat_id));
+        return($sollicitatie);
+    }
+
     public function saveSollicitatie($params) {
 
         $sollicitatie = new Sollicitatie();

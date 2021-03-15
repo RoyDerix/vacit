@@ -65,14 +65,4 @@ class HomepageController extends BaseController
         return $this->redirectToRoute('app_login');
     }
 
-    /**
-     * @Route("/test", name="test")
-     */
-/*     public function homepage2()
-    {
-        $data = $this->ss->getAllVacatures2();
-        dump($data);
-        die();
-        return array("data" => $data);
-    } */
 }

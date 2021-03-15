@@ -4,12 +4,25 @@
 
 {% block body %}
 
-    <div class="grid-x grid-padding-x margin-body">
-        <div class="cell small-3">
-            plaatje
+  <div class="grid-x grid-padding-x margin-body">
+        <div class="cell medium-3 large-2 pic-large" style="min-width: 200px">
+            <div class="medium-centered" style="max-width: 200px;">
+                <img class="medium-centered" src="{{ asset('assets/logo/vacit-login.png')}}">
+            </div>
         </div>
 
-        <div class="cell small-8">
+        <div class="cell medium-8 large-offset-1">
+
+            <div class="grid-x">
+                <div class="cell small-4 pic-small" style="margin-bottom: 20px">
+                    <div class="hex" style="height: 120px; width: 120px; background-image: url({{ asset('assets/logo/vacit-login.png') }})"></div>
+                </div>
+
+                <div class="cell small-8 medium-12">
+                    <h1 style="color: var(--orange)">login</h1>
+                </div>
+
+            </div>
 
             <form method="post">
                 {% if error %}
@@ -22,7 +35,6 @@
                     </div>
                 {% endif %}
 
-                <legend><h1 style="color: var(--orange)">LOGIN</h1></legend>
 
                 <label for="email">Email</label>
                 <input type="text" value="{{ last_username }}" name="email" id="email" class="form-control" required>

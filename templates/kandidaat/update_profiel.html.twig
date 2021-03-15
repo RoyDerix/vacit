@@ -80,17 +80,27 @@
 
     
     <div class="grid-x grid-padding-x margin-body">
-        <div class="cell medium-3 large-2" style="min-width: 200px">
+        <div class="cell medium-3 large-2 pic-large" style="min-width: 200px">
             <div class="hex medium-centered" style="height: 200px; width: 200px; background-image: url({{ asset(data.profielfoto) }})">
             </div>
         </div>
 
         <div class="cell medium-8 large-offset-1">
 
+            <div class="grid-x">
+                <div class="cell small-4 pic-small" style="margin-bottom: 20px">
+                    <div class="hex" style="height: 120px; width: 120px; background-image: url({{ asset(data.profielfoto) }})"></div>
+                </div>
+
+                <div class="cell small-8 medium-12">
+                    <h1 style="color: var(--orange)">bewerk je profiel</h1>
+                </div>
+
+            </div>
+
             <form class="form-horizontal" action="{{ path('saveKandidaatProfiel') }}" method="POST">
                 <fieldset>
 
-                    <legend><h1 style="color: var(--orange)">Update je profiel</h1></legend>
 
                     <input id="id" name="id" type="hidden" value="{{ data.id }}" class="form-control input-md" required=""> 
 

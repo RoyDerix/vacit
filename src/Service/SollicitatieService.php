@@ -29,10 +29,11 @@ class SollicitatieService extends VacatureService {
         return($sollicitaties);
     }
 
-/*     public function getAllVacatures2(){
-        $vacatures = $this->getAllVacatures();
-        return($vacatures);
-    } */
+    public function findDuplicate($vacature_id, $kandidaat_id) {
+        $sollicitatie = $this->rep->findDuplicate($vacature_id, $kandidaat_id);
+        return($sollicitatie);
+    }
+
 
     public function saveSollicitatie($data) {
 

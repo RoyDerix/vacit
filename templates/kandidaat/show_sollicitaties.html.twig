@@ -15,17 +15,26 @@
 
 
     <div class="grid-x grid-padding-x margin-body">
-        <div class="cell medium-3">
-            plaatje
+        <div class="cell medium-3 large-2 pic-large" style="min-width: 200px">
+            <div class="hex medium-centered" style="height: 200px; width: 200px; background-image: url({{ asset(app.user.profielfoto) }})">
+            </div>
         </div>
 
-        <div class="cell medium-8">
+        <div class="cell medium-8 large-offset-1">
 
-            <div class="grid-x grid-padding-x">
-                <div class="cell">
-                    <h1 style="color: var(--orange)">mijn sollicitaties</h1>
+            <div class="grid-x">
+                <div class="cell small-4 pic-small" style="margin-bottom: 20px">
+                    <div class="hex" style="height: 120px; width: 120px; background-image: url({{ asset(app.user.profielfoto) }})"></div>
                 </div>
+
+                <div class="cell small-8 medium-12">
+                    <div class="grid-x grid-padding-x">
+                            <h1 style="color: var(--orange)">mijn sollicitaties</h1>
+                    </div>
+                </div>
+
             </div>
+
 
             <div class="grid-x grid-padding-x">
                 <div class="cell">
@@ -36,6 +45,7 @@
                                 <th>VACATURE</th>
                                 <th>BEDRIJF</th>
                                 <th>UITGENODIGD</th>
+                                <th>VERWIJDEREN</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,6 +69,10 @@
                                     {% else %}
                                         <td></td>
                                     {% endif %}
+
+                                    <td>
+                                        <a href="{{ path('deleteSollicitatie', {'id': record.id}) }}"><i class="fas fa-times" style="color: var(--black)"></i></a>
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </tbody>

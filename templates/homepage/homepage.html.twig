@@ -4,24 +4,43 @@
 
 {% block body %}
     <script>
-    $(function() {
-        $("#vegas-carousel").vegas({
-            timer: false,
-            color: '#FFF',
-            slides: [
-                {% for record in data %}
-                    { src: "{{ asset(record.platform.platformIcoon) }}",
-                     },
-                {% endfor %}
-            ]
-        });
+        $(function() {
+            $("#vegas-platform").vegas({
+                timer: false,
+                color: '#333',
+                transition: 'slideRight2',
+                shuffle: true,
+                delay: 3500,
+                firstTransitionDuration: 1,
+                slides: [
+                    {% for record in data %}
+                        { src: "{{ asset(record.platform.platformIcoon) }}",
+                        vacature: "{{record.niveau.tekstveld}} {{record.titel}}",
+                        bedrijf: "{{record.bedrijf.naam}}, {{record.standplaats}}"
+                        },
+                    {% endfor %}
+                ],
 
-    });
+                walk: function(index, currentSlide) {
+                    $('#vegas-vacature').html(currentSlide.vacature);
+
+                    $('#vegas-bedrijf').html(currentSlide.bedrijf);
+                }
+            });
+        });
     </script>
 
     <div class="grid-x grid-padding-x" style="background-color: #F15A24;">
         <div class="cell medium-3 menu-groot" style="margin-top: 30px; margin-bottom: 30px"> 
-            <div id="vegas-carousel" class="hex" style="height: 200px; width: 200px;">
+            <div id="vegas-platform" class="hex small-centered" style="height: 200px; width: 200px; background-color: var(--black)">
+            </div>
+            <div style="transform: rotate(-13deg); margin-top: -40px">
+                <h3 style="color: white; text-align: right; margin-right: 5%">
+                    <div id="vegas-vacature" style="margin-bottom: 5px; background-color: var(--black); display: inline-block; padding: 5px">
+                    </div><br>
+                    <div id="vegas-bedrijf" style='background-color: var(--black); display: inline-block; padding: 5px; font-size: 16px'>
+                    </div>
+                </h3>
             </div>
         </div>
 
@@ -29,7 +48,7 @@
             {% for record in data | sort((a,b) => b.plaatsingsDatum <=> a.plaatsingsDatum) %}
                 {% if loop.index <= 5 %}
                     <div class="grid-x" style="margin-bottom: 20px">
-                        <div class="cell small-3 hex" style="background-color: white; height: 150px; width: 150px; margin: 10px; background-image: url({{ asset(record.platform.platformIcoon) }})">
+                        <div class="cell small-3 hex" style="background-color: var(--black); height: 150px; width: 150px; margin: 10px; background-image: url({{ asset(record.platform.platformIcoon) }})">
                         </div>
                         <div class="cell auto">
                             <div class="grid-x">

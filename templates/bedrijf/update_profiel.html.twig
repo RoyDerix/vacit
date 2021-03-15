@@ -9,7 +9,7 @@
             let imgUploader = new ss.SimpleUpload({
                 button: "img-upload",
                 url: "{{ path('upload_file') }}",
-                name: 'file', // upload parameter name die gebruikt wordt in de controller
+                name: 'file',
                 responseType: 'json',
                 allowedExtensions: ['png', 'jpg', 'jpeg'],
                 hoverClass: 'hover-class-upload',
@@ -45,18 +45,28 @@
 
 
     <div class="grid-x grid-padding-x margin-body">
-        <div class="cell medium-3 large-2" style="min-width: 200px">
+        <div class="cell medium-3 large-2 pic-large" style="min-width: 200px">
             <div class="medium-centered" style="max-width: 200px;">
                 <img class="medium-centered" src="{{asset(data.profielfoto)}}">
             </div>
         </div>
 
         <div class="cell medium-8 large-offset-1">
+        
+
+            <div class="grid-x">
+                <div class="cell small-4 pic-small" style="margin-bottom: 20px">
+                    <img style="width: 120px" src="{{asset(data.profielfoto)}}">
+                </div>
+
+                <div class="cell small-8 medium-12">
+                    <h1 style="color: var(--orange)">bewerk je profiel</h1>
+                </div>
+            </div>
 
             <form class="form-horizontal" action="{{ path('saveBedrijfProfiel') }}" method="POST">
                 <fieldset>
 
-                    <legend><h1 style="color: var(--orange)">Update je profiel</h1></legend>
 
                     <input id="id" name="id" type="hidden" value="{{ data.id }}" class="form-control input-md" required="">                
 
@@ -90,7 +100,6 @@
                             <textarea id="gebruikerBeschrijving" name="gebruikerBeschrijving" rows="10" class="richtext" required="">{{ data.gebruikerBeschrijving }}</textarea>
                         </div>
                     </div>
-
                     <div class="grid-x grid-padding-x" style="margin-bottom: 20px">
                         <div class="cell small-6">
                             <button class="upload-button" id="img-upload" name="img-upload" type="button"><h3>Upload Profielfoto</h3></button>

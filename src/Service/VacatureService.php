@@ -74,7 +74,7 @@ class VacatureService {
         }
         $niveau = $this->nps->getNiveauPlatform($params['niveau']);
         $platform = $this->nps->getNiveauPlatform($params['platform']);
-        $bedrijf = $this->security->getUser();
+        $bedrijf = $this->bs->getBedrijf($params['bedrijf_id']);
         $vacatureBeschrijving = strip_tags($params['vacatureBeschrijving'], '<br><b><i><div>');
         $vacatureBeschrijving = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $vacatureBeschrijving);
         
@@ -99,6 +99,10 @@ class VacatureService {
     }
     
     public function deleteVacature($id) {
+        $sollicitaties = $this->ss->getVacatureSollicitaties($id);
+        foreach($sollicitaties as $sollicitatie) {
+            $this->ss->deleteSollicitatie($sollicitatie->getId());
+        }
         $vacature = $this->rep->deleteVacature($id);
         return($vacature);
     }
@@ -109,15 +113,22 @@ class VacatureService {
         $date = new \DateTime();
         $vacature = $this->getVacature($id);
         $kandidaat = $this->security->getUser();
-        $data = array(
-                    "vacature" => $vacature,
-                    "uitgenodigd" => FALSE,
-                    "sollicitatieDatum" => $date,
-                    "kandidaat" => $kandidaat
-        );
+        $duplicate = $this->ss->findDuplicate($id, $kandidaat->getId());
+        if(!$duplicate) {
+            $data = array(
+                        "vacature" => $vacature,
+                        "uitgenodigd" => FALSE,
+                        "sollicitatieDatum" => $date,
+                        "kandidaat" => $kandidaat
+            );
 
-        $sollicitatie = $this->ss->saveSollicitatie($data);
-        return($sollicitatie);
+            $sollicitatie = $this->ss->saveSollicitatie($data);
+            return($sollicitatie);
+        }
+
+        else{
+            return('duplicate');
+        }
     }
 
 
