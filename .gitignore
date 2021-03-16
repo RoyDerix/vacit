@@ -4,7 +4,15 @@
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
-/public/assets/
+/public/assets/bootstrap/
+/public/assets/fontawesome/
+/public/assets/fonts/
+/public/assets/foundation/
+/public/assets/jquery/
+/public/assets/richtext/
+/public/assets/simpleuploader/
+/public/assets/vegas/
+/public/assets/webfonts/
 /public/upload/
 /var/
 /vendor/
