@@ -41,3 +41,7 @@ De volgende techologieën heb ik gebruikt:
 Dit voorbeeld toont het proces voor het ophalen van een vacature.
 
 <img src="public/assets/screenshots/ASD-Vacit.png" />
+
+## Andere projecten:
+
+Verrukkulluk! https://github.com/RoyDerix/Verrukkulluk
