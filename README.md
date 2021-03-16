@@ -11,3 +11,33 @@ Daarnaast is er een alternatieve pagina met een tabel met alle vacatures.
 
 
 <img src="public/assets/screenshots/paginas.png"/>
+
+## Technologieën
+
+De back-end applicatie heb ik geschreven in PHP, met behulp van het Symfony framework, en een MySQL database.  
+De front-end applicatie heb ik geschreven in HTML en CSS met behulp van template engine TWIG.
+
+De volgende techologieën heb ik gebruikt:
+
+- PHP / JavaScript / jQuery
+- Symfony
+- HTML / CSS
+- Twig
+- MySQL
+- Foundation
+- Datatables / Vegas JS
+- Apache
+
+## Methoden & Technieken
+
+### Entity Relationship Diagram
+
+<img src="public/assets/screenshots/ERD-Vacit.png" />
+
+
+
+### Application Structure Diagram / Functionele Decompositie
+
+Dit voorbeeld toont het proces voor het ophalen van een vacature.
+
+<img src="public/assets/screenshots/ASD-Vacit.png" />
