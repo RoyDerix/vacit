@@ -14,4 +14,11 @@
 .phpunit
 .phpunit.result.cache
 /phpunit.xml
+/bedrijven.xlsx
+/composer.json
+/composer.lock
+/phpunit.xml.dist
+/symfony.lock
+/.env
+/.env.test
 ###< symfony/phpunit-bridge ###
