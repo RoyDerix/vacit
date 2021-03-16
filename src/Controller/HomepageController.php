@@ -65,4 +65,14 @@ class HomepageController extends BaseController
         return $this->redirectToRoute('app_login');
     }
 
+    /**
+     * @Route("/showWerkgeverProfiel/{id}", name="showWerkgeverProfiel")
+     * @Template()
+     */
+    public function showWerkgeverProfiel($id)
+    {
+        $data = $this->ks->getKandidaat($id);
+        return array("data" => $data);
+    }
+
 }

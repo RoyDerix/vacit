@@ -79,17 +79,6 @@ class KandidaatController extends BaseController
     }
 
     /**
-     * @Route("/showWerkgeverProfiel/{id}", name="showWerkgeverProfiel")
-     * @Template()
-     */
-    public function showWerkgeverProfiel($id)
-    {
-        $data = $this->ks->getKandidaat($id);
-        return array("data" => $data);
-    }
-
-
-    /**
      * @Route("/saveSollicitatie/{id}", name="saveSollicitatie")
      */
     public function saveSollicitatie($id)
