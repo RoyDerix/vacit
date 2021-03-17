@@ -24,7 +24,8 @@
                             <h1 style="color: var(--orange)">bewerk vacature</h1>
                         </div>
                         <div class="cell medium-6">
-                            <a href="{{ path('deleteVacature', {'id': data.id}) }}"><h3 style="color: var(--black)">vacature verwijderen</h3></a>
+                            <a href="{{ path('deleteVacature', {'id': data.id}) }}" onclick="return confirm('Weet je zeker dat je deze vacature wil verwijderen?')">
+                            <h3 style="color: var(--black)">vacature verwijderen</h3></a>
                         </div>
                     </div>
                 </div>

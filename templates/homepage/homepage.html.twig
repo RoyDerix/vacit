@@ -45,17 +45,22 @@
         </div>
 
         <div class="cell medium-9 margin-body">
-            {% for record in data | sort((a,b) => b.plaatsingsDatum <=> a.plaatsingsDatum) %}
-                {% if loop.index <= 5 %}
+            {% for record in data | sort((a,b) => b.plaatsingsDatum <=> a.plaatsingsDatum)[:5] %}
                     <div class="grid-x" style="margin-bottom: 20px">
-                        <div class="cell small-3 hex" style="background-color: var(--black); height: 150px; width: 150px; margin: 10px; background-image: url({{ asset(record.platform.platformIcoon) }})">
+                        <div class="cell small-3 hex" style="background-color: var(--black); 
+                                                            height: 150px; 
+                                                            width: 150px; 
+                                                            margin: 10px; 
+                                                            background-image: url({{ asset(record.platform.platformIcoon) }})">
                         </div>
                         <div class="cell auto">
                             <div class="grid-x">
                                 <div class="cell small-9">
                                     <p>
                                         <h5>{{ record.plaatsingsDatum | date('d-m-Y') }}</h5>
-                                        <a href="{{ path('detailpagina', {'id':record.id}) }}"><h2 class="titel">{{ record.titel }} voor {{ record.bedrijf.naam }}</h2></a>
+                                        <a href="{{ path('detailpagina', {'id':record.id}) }}"><h2 class="titel">
+                                            {{ record.titel }} voor {{ record.bedrijf.naam }}
+                                        </h2></a>
                                         <h4>{{ record.vacatureBeschrijving | striptags | u.truncate(150, '...') }}</h4>
                                     </p>
                                 </div>
@@ -65,7 +70,6 @@
                             </div>
                         </div>
                     </div>
-                {% endif %}
             {% endfor %}
             <div class="grid-x">
                 <div class="cell small-9 titel" style="text-align: center">
