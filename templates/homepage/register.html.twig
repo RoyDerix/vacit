@@ -94,6 +94,15 @@
                 </div>
 
                 <div class="cell small-8 medium-12">
+
+                    {% for violations in app.flashes('notice') %}
+                        {% for violation in violations %}
+                            <div class="flash-notice">
+                                <h4>{{ violation.message }}</h4>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    
                     <h1 style="color: var(--orange)">registreer je nu!</h1>
                 </div>
 

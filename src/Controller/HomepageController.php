@@ -62,7 +62,13 @@ class HomepageController extends BaseController
     {
         $params = $request->request->all();
         $profiel = $this->ks->saveProfiel($params);
-        return $this->redirectToRoute('app_login');
+
+        if(!$profiel){
+            return $this->redirectToRoute('app_login');
+        }
+        $this->addFlash('notice', $profiel);
+        return $this->redirectToRoute('registerKandidaat');
+
     }
 
     /**

@@ -287,3 +287,7 @@ h5 {
   .class-upload {
       cursor: pointer !important;
   }
+
+  .flash-notice {
+      color: var(--orange);
+  }

@@ -60,7 +60,13 @@ class BedrijfController extends BaseController
     {
         $params = $request->request->all();
         $profiel = $this->bs->saveProfiel($params);
-        return $this->redirectToRoute('showBedrijfProfiel', ['id' => $params['id']]);
+
+        if(!$profiel) {
+            return $this->redirectToRoute('showBedrijfProfiel', ['id' => $params['id']]);
+        }
+
+        $this->addFlash('notice', $profiel);
+        return $this->redirectToRoute('updateBedrijfProfiel', ['id' => $params['id']]);
     }
 
     /**

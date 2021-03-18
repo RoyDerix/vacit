@@ -9,6 +9,8 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+
 
 /**
  * @method Gebruiker|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,12 +21,15 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class GebruikerRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
     private $encoder;
+    private $val;
 
     public function __construct(ManagerRegistry $registry,
-                                UserPasswordEncoderInterface $encoder)
+                                UserPasswordEncoderInterface $encoder,
+                                ValidatorInterface $val)
     {
         parent::__construct($registry, Gebruiker::class);
         $this->encoder = $encoder;
+        $this->val = $val;
     }
 
     /**
@@ -95,10 +100,17 @@ class GebruikerRepository extends ServiceEntityRepository implements PasswordUpg
             $gebruiker->setProfielfoto($params['profielfoto']);
         }
 
+        $errors = $this->val->validate($gebruiker);
+
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
+            return ($errors);
+        }
+
         $em = $this->getEntityManager();
         $em->persist($gebruiker);
         $em->flush();
 
-        return($gebruiker);
+        return false;
    }
 }

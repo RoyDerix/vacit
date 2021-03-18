@@ -4,7 +4,6 @@
 
 {% block body %}
 
-
     <script>
         $(document).ready(function() {
             let uploader = new ss.SimpleUpload({
@@ -78,6 +77,7 @@
 
     </script>
 
+
     
     <div class="grid-x grid-padding-x margin-body">
         <div class="cell medium-3 large-2 pic-large" style="min-width: 200px">
@@ -92,7 +92,17 @@
                     <div class="hex" style="height: 120px; width: 120px; background-image: url({{ asset(data.profielfoto) }})"></div>
                 </div>
 
+
                 <div class="cell small-8 medium-12">
+
+                    {% for violations in app.flashes('notice') %}
+                        {% for violation in violations %}
+                            <div class="flash-notice">
+                                <h4>{{ violation.message }}</h4>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+
                     <h1 style="color: var(--orange)">bewerk je profiel</h1>
                 </div>
 
@@ -161,7 +171,7 @@
 
                     <div class="grid-x grid-padding-x" style="margin-bottom: 20px">
                         <div class="cell small-6">
-                            <button class="upload-button" id="upload" name="cv-upload" type="button"><h3>Upload CV</h3></button>
+                            <button class="btn upload-button" id="upload" name="cv-upload" type="button" ><h3>Upload CV</h3></button>
 
                             <div id="file-uploaded" style="display: none">
                                 <i class="fas fa-file-pdf"></i>

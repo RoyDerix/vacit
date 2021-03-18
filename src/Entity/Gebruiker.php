@@ -6,6 +6,7 @@ use App\Repository\GebruikerRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=GebruikerRepository::class)
@@ -22,6 +23,9 @@ class Gebruiker implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email(
+     * message = "{{ value }} is geen geldig email adres"
+     * )
      */
     private $email;
 
@@ -53,6 +57,10 @@ class Gebruiker implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @Assert\Length(
+     * min = 10,
+     * minMessage = "{{ value }} is geen geldig telefoonnummer.",
+     * )
      */
     private $telefoonnummer;
 
@@ -63,6 +71,11 @@ class Gebruiker implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=10)
+     * @Assert\Length(
+     * max = 6,
+     * min = 6,
+     * exactMessage = "{{ value }} is geen geldige postcode.",
+     * )
      */
     private $postcode;
 

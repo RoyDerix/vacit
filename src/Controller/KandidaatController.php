@@ -54,9 +54,16 @@ class KandidaatController extends BaseController
     {
         $params = $request->request->all();
         $profiel = $this->ks->saveProfiel($params);
+
         $user = $this->getUser();
         $user_id = $user->getId();
-        return $this->redirectToRoute('showKandidaatProfiel', ['id' => $user_id]);
+
+        if(!$profiel){
+            return $this->redirectToRoute('showKandidaatProfiel', ['id' => $user_id]);
+        }
+        $this->addFlash('notice', $profiel);
+        return $this->redirectToRoute('updateKandidaatProfiel', ['id' => $user_id]);
+  
     }
 
     /**
