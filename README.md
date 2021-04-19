@@ -44,5 +44,5 @@ Dit voorbeeld toont het proces voor het ophalen van een vacature.
 
 ## Andere projecten:
 
-Verrukkulluk! https://github.com/RoyDerix/Verrukkulluk
+Verrukkulluk! https://github.com/RoyDerix/Verrukkulluk  
 ZAPP https://github.com/RoyDerix/Zapp
